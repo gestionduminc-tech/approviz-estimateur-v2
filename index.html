@@ -4,145 +4,383 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estimateur d'économies — Approviz</title>
+  <meta name="description" content="Calculez en 2 minutes combien votre entreprise pourrait économiser sur la gestion de ses commandes d'articles promotionnels.">
+
+  <!-- ===== SÉCURITÉ : CSP & Anti-Clickjacking ===== -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://calendly.com; frame-src https://calendly.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #109154;
-      --green-dark: #0b7040;
-      --green-light: #e8f5ee;
-      --orange: #F39C12;
-      --orange-dark: #d4880a;
-      --navy: #1A2332;
-      --navy-light: #243044;
-      --white: #FFFFFF;
-      --off-white: #F8F9FA;
-      --gray-100: #F1F3F5;
-      --gray-200: #E9ECEF;
-      --gray-400: #ADB5BD;
-      --gray-600: #6C757D;
-      --gray-800: #343A40;
-      --text: #212529;
-      --radius: 12px;
-      --radius-lg: 20px;
-      --shadow: 0 4px 24px rgba(0,0,0,0.08);
-      --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
-      --transition: all 0.25s ease;
+      --green: #10b981;
+      --green-dark: #059669;
+      --green-light: #d1fae5;
+      --green-glow: rgba(16,185,129,0.15);
+      --orange: #f59e0b;
+      --orange-dark: #d97706;
+      --navy: #0f172a;
+      --navy-mid: #1e293b;
+      --navy-light: #334155;
+      --slate: #475569;
+      --white: #ffffff;
+      --off-white: #f8fafc;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+      --text: #0f172a;
+      --radius: 14px;
+      --radius-lg: 22px;
+      --radius-xl: 32px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow: 0 4px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-lg: 0 20px 60px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+      --shadow-xl: 0 32px 80px rgba(0,0,0,0.16);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Lato', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* HEADER */
+    /* ===================== HEADER ===================== */
     header {
-      background: var(--navy);
-      padding: 14px 32px;
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0 40px;
+      height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    header img { height: 42px; width: auto; }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .header-logo img {
+      height: 62px;
+      width: auto;
+      filter: brightness(1.1);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
     .header-badge {
-      background: var(--green);
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
       color: white;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
-      font-weight: 600;
-      padding: 6px 16px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
+      font-weight: 700;
+      padding: 7px 18px;
+      border-radius: 30px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+    }
+    .header-trust {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+    }
+    .header-trust-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
 
-    /* HERO */
+    /* ===================== HERO ===================== */
     .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-      padding: 72px 24px 60px;
-      text-align: center;
+      background: var(--navy);
       position: relative;
       overflow: hidden;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
     }
-    .hero::before {
-      content: '';
-      position: absolute; top: -80px; right: -80px;
-      width: 320px; height: 320px;
-      background: radial-gradient(circle, rgba(16,145,84,0.18) 0%, transparent 70%);
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/images/hero-warehouse.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: 0.12;
+    }
+    .hero-bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(15,23,42,0.97) 0%,
+        rgba(15,23,42,0.88) 40%,
+        rgba(15,23,42,0.75) 100%
+      );
+    }
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow-1 {
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 65%);
       border-radius: 50%;
     }
-    .hero::after {
-      content: '';
-      position: absolute; bottom: -60px; left: -60px;
-      width: 260px; height: 260px;
-      background: radial-gradient(circle, rgba(243,156,18,0.12) 0%, transparent 70%);
+    .hero-glow-2 {
+      position: absolute;
+      bottom: -100px;
+      left: -60px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 65%);
       border-radius: 50%;
     }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-text {}
     .hero-eyebrow {
-      display: inline-block;
-      background: rgba(16,145,84,0.2);
-      border: 1px solid rgba(16,145,84,0.4);
-      color: #4ade80;
-      font-family: 'Poppins', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 20px;
-      margin-bottom: 22px;
+      padding: 7px 16px;
+      border-radius: 30px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #34d399;
     }
     .hero h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(28px, 5vw, 50px);
+      font-size: clamp(32px, 4.5vw, 54px);
       font-weight: 800;
       color: var(--white);
-      line-height: 1.15;
-      margin-bottom: 18px;
-      position: relative; z-index: 1;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
     }
-    .hero h1 span { color: var(--orange); }
-    .hero p {
-      font-size: clamp(16px, 2.5vw, 19px);
-      color: rgba(255,255,255,0.75);
-      max-width: 580px;
-      margin: 0 auto 36px;
-      line-height: 1.65;
-      position: relative; z-index: 1;
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--orange) 0%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .hero-stats {
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+    .hero-stats-row {
       display: flex;
-      justify-content: center;
-      gap: 40px;
+      gap: 32px;
       flex-wrap: wrap;
-      position: relative; z-index: 1;
+    }
+    .hero-stat {
+      position: relative;
     }
     .hero-stat-num {
       font-family: 'Poppins', sans-serif;
-      font-size: 30px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--orange);
+      line-height: 1;
     }
-    .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .hero-stat-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      align-self: center;
+    }
 
-    /* PROGRESS */
-    .progress-container {
+    /* Hero right panel */
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+    .hero-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+    .hero-card-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+    .hero-card-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 6px;
+    }
+    .hero-card-bar {
+      margin-top: 16px;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .hero-card-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green) 0%, #34d399 100%);
+      border-radius: 3px;
+      animation: bar-grow 1.5s ease-out forwards;
+    }
+    @keyframes bar-grow {
+      from { width: 0%; }
+      to { width: 73%; }
+    }
+    .hero-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hero-mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .hero-mini-stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+    }
+    .hero-mini-stat-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: white;
+    }
+    .hero-mini-stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+    }
+
+    /* ===================== TRUST BAR ===================== */
+    .trust-bar {
       background: var(--white);
       border-bottom: 1px solid var(--gray-200);
-      padding: 20px 24px;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .trust-item-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--gray-500);
+      font-weight: 500;
+    }
+    .trust-icon-bar {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ===================== PROGRESS ===================== */
+    .progress-container {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 18px 40px;
       position: sticky;
-      top: 70px;
+      top: 76px;
       z-index: 90;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
     }
     .progress-steps {
       display: flex;
       align-items: center;
       justify-content: center;
-      max-width: 560px;
+      max-width: 500px;
       margin: 0 auto;
     }
     .progress-step {
@@ -155,269 +393,992 @@
     .progress-step:not(:last-child)::after {
       content: '';
       position: absolute;
-      top: 18px; left: 60%;
-      width: 80%; height: 2px;
+      top: 17px; left: 62%;
+      width: 76%; height: 2px;
       background: var(--gray-200);
       transition: var(--transition);
     }
     .progress-step.completed:not(:last-child)::after { background: var(--green); }
     .step-circle {
-      width: 36px; height: 36px;
+      width: 34px; height: 34px;
       border-radius: 50%;
       border: 2px solid var(--gray-200);
       background: var(--white);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px; font-weight: 700;
+      font-size: 13px; font-weight: 700;
       color: var(--gray-400);
       transition: var(--transition);
       position: relative; z-index: 1;
+      font-family: 'Poppins', sans-serif;
     }
     .progress-step.active .step-circle {
-      border-color: var(--green); background: var(--green); color: white;
-      box-shadow: 0 0 0 4px rgba(16,145,84,0.15);
+      border-color: var(--green);
+      background: var(--green);
+      color: white;
+      box-shadow: 0 0 0 5px rgba(16,185,129,0.12);
     }
-    .progress-step.completed .step-circle { border-color: var(--green); background: var(--green); color: white; }
-    .step-label { font-size: 11px; color: var(--gray-400); margin-top: 6px; font-weight: 600; text-align: center; transition: var(--transition); }
-    .progress-step.active .step-label, .progress-step.completed .step-label { color: var(--green); }
+    .progress-step.completed .step-circle {
+      border-color: var(--green);
+      background: var(--green);
+      color: white;
+    }
+    .step-label {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 7px;
+      font-weight: 600;
+      text-align: center;
+      transition: var(--transition);
+      letter-spacing: 0.3px;
+    }
+    .progress-step.active .step-label,
+    .progress-step.completed .step-label { color: var(--green); }
 
-    /* MAIN */
-    .main { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+    /* ===================== MAIN ===================== */
+    .main { max-width: 860px; margin: 0 auto; padding: 48px 24px 100px; }
 
-    /* STEP PANELS */
-    .step-panel { display: none; animation: fadeIn 0.35s ease; }
+    /* ===================== STEP PANELS ===================== */
+    .step-panel { display: none; animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     .step-panel.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
+    /* ===================== STEP CARD ===================== */
     .step-card {
       background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      padding: 44px;
-      margin-bottom: 24px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 52px;
+      margin-bottom: 28px;
+      border: 1px solid var(--gray-100);
     }
-    .step-title { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-    .step-subtitle { font-size: 15px; color: var(--gray-600); margin-bottom: 36px; line-height: 1.55; }
+    .step-header {
+      margin-bottom: 40px;
+    }
+    .step-tag {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .step-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .step-subtitle {
+      font-size: 15px;
+      color: var(--gray-500);
+      line-height: 1.6;
+      max-width: 600px;
+    }
 
-    /* FORM */
-    .form-group { margin-bottom: 32px; }
-    label { display: block; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
-    label .required { color: var(--orange); margin-left: 3px; }
+    /* ===================== FORM ELEMENTS ===================== */
+    .form-group { margin-bottom: 36px; }
+    label.field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      letter-spacing: 0.1px;
+    }
+    label.field-label .required { color: var(--orange); margin-left: 3px; }
+    .field-hint {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 8px;
+      font-weight: 400;
+    }
 
-    .stepper { display: flex; align-items: center; width: fit-content; }
+    /* Stepper */
+    .stepper {
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
     .stepper-btn {
-      width: 46px; height: 46px;
-      border: 2px solid var(--gray-200); background: var(--white);
-      font-size: 22px; font-weight: 700; color: var(--navy);
-      cursor: pointer; transition: var(--transition);
+      width: 52px; height: 52px;
+      border: 2px solid var(--gray-200);
+      background: var(--gray-50);
+      font-size: 22px; font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      transition: var(--transition);
       display: flex; align-items: center; justify-content: center;
       user-select: none;
     }
-    .stepper-btn:first-child { border-radius: var(--radius) 0 0 var(--radius); }
-    .stepper-btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .stepper-btn:first-child { border-radius: var(--radius) 0 0 var(--radius); border-right: none; }
+    .stepper-btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; border-left: none; }
     .stepper-btn:hover { background: var(--green-light); border-color: var(--green); color: var(--green); }
     .stepper-value {
-      width: 68px; height: 46px;
-      border: 2px solid var(--gray-200); border-left: none; border-right: none;
+      width: 80px; height: 52px;
+      border: 2px solid var(--gray-200);
       text-align: center;
-      font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: var(--navy);
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px; font-weight: 800;
+      color: var(--navy);
       outline: none;
+      background: white;
     }
 
-    .input-prefix {
-      display: flex; align-items: center;
-      border: 2px solid var(--gray-200); border-radius: var(--radius);
-      overflow: hidden; transition: var(--transition); max-width: 220px;
+    /* Slider */
+    .slider-display {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 16px;
     }
-    .input-prefix:focus-within { border-color: var(--green); box-shadow: 0 0 0 3px rgba(16,145,84,0.1); }
-    .prefix-symbol {
-      background: var(--gray-100); padding: 0 14px; height: 50px;
+    .slider-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+    .slider-unit {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gray-400);
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--gray-200);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--green);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(16,185,129,0.4);
+      transition: var(--transition);
+      border: 3px solid white;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    /* Salary input */
+    .salary-input-wrap {
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+      max-width: 240px;
+      background: white;
+    }
+    .salary-input-wrap:focus-within {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(16,185,129,0.08);
+    }
+    .salary-prefix {
+      background: var(--gray-50);
+      padding: 0 16px;
+      height: 54px;
       display: flex; align-items: center;
-      font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--gray-600); font-size: 17px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      color: var(--gray-500);
+      font-size: 18px;
       border-right: 2px solid var(--gray-200);
     }
-    .prefix-input {
-      border: none; outline: none; padding: 0 16px; height: 50px;
-      font-family: 'Poppins', sans-serif; font-size: 19px; font-weight: 700; color: var(--navy);
-      width: 100%; background: transparent;
+    .salary-input {
+      border: none; outline: none;
+      padding: 0 18px;
+      height: 54px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy);
+      width: 100%;
+      background: transparent;
     }
 
-    .freq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+    /* Frequency grid */
+    .freq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
     .freq-option { position: relative; }
     .freq-option input[type="radio"] { position: absolute; opacity: 0; width: 0; }
     .freq-label {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 18px 12px;
-      border: 2px solid var(--gray-200); border-radius: var(--radius);
-      cursor: pointer; transition: var(--transition); text-align: center; background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      background: var(--white);
     }
-    .freq-label:hover { border-color: var(--green); background: var(--green-light); }
-    .freq-option input:checked + .freq-label { border-color: var(--green); background: var(--green-light); box-shadow: 0 0 0 3px rgba(16,145,84,0.1); }
-    .freq-icon { font-size: 26px; margin-bottom: 7px; }
-    .freq-name { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); }
-    .freq-desc { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+    .freq-label:hover {
+      border-color: var(--green);
+      background: var(--green-light);
+      transform: translateY(-2px);
+    }
+    .freq-option input:checked + .freq-label {
+      border-color: var(--green);
+      background: var(--green-light);
+      box-shadow: 0 0 0 4px rgba(16,185,129,0.1);
+    }
+    .freq-icon { font-size: 28px; margin-bottom: 8px; }
+    .freq-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px; font-weight: 700;
+      color: var(--navy);
+    }
+    .freq-desc { font-size: 11px; color: var(--gray-500); margin-top: 3px; }
 
-    .slider-value-display { font-family: 'Poppins', sans-serif; font-size: 34px; font-weight: 800; color: var(--green); margin-bottom: 10px; }
-    .slider-value-display span { font-size: 16px; font-weight: 500; color: var(--gray-600); }
-    input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: var(--gray-200); outline: none; cursor: pointer; }
-    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--green); cursor: pointer; box-shadow: 0 2px 8px rgba(16,145,84,0.4); transition: var(--transition); }
-    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-    .slider-labels { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; color: var(--gray-400); }
+    /* ===================== INSIGHT BOX ===================== */
+    .insight-box {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .insight-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .insight-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+    .insight-text strong {
+      color: var(--green);
+      font-weight: 700;
+    }
 
-    /* PRODUCTS */
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 16px; }
+    /* ===================== PRODUCTS ===================== */
+    .products-intro {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+    .products-intro-icon {
+      font-size: 28px;
+    }
+    .products-intro-text {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+    .products-intro-text strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
     .product-option { position: relative; }
     .product-option input[type="checkbox"] { position: absolute; opacity: 0; width: 0; }
     .product-card {
-      border: 2px solid var(--gray-200); border-radius: var(--radius);
-      padding: 18px 12px; cursor: pointer; transition: var(--transition);
-      background: var(--white); text-align: center; position: relative;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 22px 14px 18px;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .product-card:hover { border-color: var(--green); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(16,145,84,0.12); }
-    .product-option input:checked + .product-card { border-color: var(--green); background: var(--green-light); box-shadow: 0 0 0 3px rgba(16,145,84,0.12); }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--green-light) 0%, transparent 60%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .product-card:hover {
+      border-color: var(--green);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(16,185,129,0.15);
+    }
+    .product-card:hover::before { opacity: 1; }
+    .product-option input:checked + .product-card {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(16,185,129,0.12), 0 8px 24px rgba(16,185,129,0.15);
+    }
+    .product-option input:checked + .product-card::before { opacity: 1; }
     .product-check {
-      position: absolute; top: 10px; right: 10px;
-      width: 22px; height: 22px; border-radius: 50%;
+      position: absolute;
+      top: 12px; right: 12px;
+      width: 24px; height: 24px;
+      border-radius: 50%;
       background: var(--gray-200);
       display: flex; align-items: center; justify-content: center;
-      transition: var(--transition); font-size: 12px;
+      transition: var(--transition);
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 1;
     }
-    .product-option input:checked + .product-card .product-check { background: var(--green); color: white; }
-    .product-img { width: 88px; height: 88px; object-fit: contain; margin: 0 auto 10px; display: block; }
-    .product-name { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; color: var(--navy); line-height: 1.3; }
-    .product-qty { margin-top: 10px; display: none; }
+    .product-option input:checked + .product-card .product-check {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 4px 8px rgba(16,185,129,0.4);
+    }
+    .product-img {
+      width: 96px; height: 96px;
+      object-fit: contain;
+      margin: 0 auto 12px;
+      display: block;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+    }
+    .product-card:hover .product-img { transform: scale(1.05); }
+    .product-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+    .product-price-tag {
+      display: inline-block;
+      background: var(--gray-100);
+      color: var(--gray-500);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 6px;
+      position: relative;
+      z-index: 1;
+    }
+    .product-option input:checked + .product-card .product-price-tag {
+      background: rgba(16,185,129,0.15);
+      color: var(--green-dark);
+    }
+    .product-qty {
+      margin-top: 12px;
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
     .product-option input:checked + .product-card .product-qty { display: block; }
-    .qty-label { font-size: 10px; color: var(--gray-600); margin-bottom: 4px; }
-    .qty-input { width: 100%; border: 1.5px solid var(--green); border-radius: 8px; padding: 6px 10px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; text-align: center; color: var(--navy); outline: none; background: white; }
+    .qty-label {
+      font-size: 10px;
+      color: var(--gray-500);
+      margin-bottom: 5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .qty-input {
+      width: 100%;
+      border: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--navy);
+      outline: none;
+      background: white;
+      transition: var(--transition);
+    }
+    .qty-input:focus {
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+    }
 
-    /* BUTTONS */
+    /* ===================== BUTTONS ===================== */
     .btn-primary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--green); color: white;
-      font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700;
-      padding: 16px 40px; border-radius: var(--radius); border: none; cursor: pointer;
-      transition: var(--transition); text-decoration: none; letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 18px 44px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      box-shadow: 0 8px 24px rgba(16,185,129,0.3);
     }
-    .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,145,84,0.35); }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(16,185,129,0.4);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
     .btn-secondary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: transparent; color: var(--gray-600);
-      font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600;
-      padding: 14px 28px; border-radius: var(--radius); border: 2px solid var(--gray-200); cursor: pointer; transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--gray-500);
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 16px 28px;
+      border-radius: var(--radius);
+      border: 2px solid var(--gray-200);
+      cursor: pointer;
+      transition: var(--transition);
     }
-    .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+    .btn-secondary:hover {
+      border-color: var(--navy);
+      color: var(--navy);
+      background: var(--gray-50);
+    }
     .btn-calendly {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      background: var(--orange); color: white;
-      font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 700;
-      padding: 18px 44px; border-radius: var(--radius); border: none; cursor: pointer;
-      transition: var(--transition); text-decoration: none; letter-spacing: 0.3px;
-      width: 100%; max-width: 440px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 20px 48px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 8px 24px rgba(245,158,11,0.35);
     }
-    .btn-calendly:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(243,156,18,0.4); }
-    .btn-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 36px; }
+    .btn-calendly:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(245,158,11,0.45);
+    }
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
 
-    /* RESULTS */
+    /* ===================== SOCIAL PROOF ===================== */
+    .social-proof {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      margin-top: 28px;
+      border: 1px solid var(--gray-100);
+    }
+    .social-proof-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .social-proof-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .social-proof-stars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+    .stars-icons { color: var(--orange); }
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .testimonial {
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid var(--gray-100);
+      position: relative;
+    }
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 16px; right: 20px;
+      font-size: 48px;
+      color: var(--green-light);
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .testimonial-stars { color: var(--orange); font-size: 13px; margin-bottom: 10px; }
+    .testimonial-text {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.65;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .testimonial-author {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .testimonial-company { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+    /* ===================== RESULTS ===================== */
+    .results-wrapper {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
     .results-header {
       text-align: center;
-      padding: 52px 44px 36px;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      color: white;
+      padding: 64px 52px 44px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .results-header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .results-header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+      border-radius: 50%;
     }
     .results-badge {
       display: inline-block;
-      background: rgba(16,145,84,0.25); border: 1px solid rgba(16,145,84,0.5); color: #4ade80;
-      font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 5px 16px; border-radius: 20px; margin-bottom: 18px;
+      background: rgba(16,185,129,0.2);
+      border: 1px solid rgba(16,185,129,0.4);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 30px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
     }
-    .results-header h2 { font-family: 'Poppins', sans-serif; font-size: clamp(22px, 4vw, 34px); font-weight: 800; margin-bottom: 8px; }
-    .results-header p { font-size: 15px; opacity: 0.65; }
+    .results-header h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
     .savings-amount {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(56px, 10vw, 84px);
-      font-weight: 800; color: var(--orange); line-height: 1;
-      margin: 26px 0 8px;
-      text-shadow: 0 2px 20px rgba(243,156,18,0.3);
+      font-size: clamp(60px, 11vw, 92px);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--orange) 0%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 28px 0 10px;
+      position: relative;
+      z-index: 1;
     }
-    .savings-label { font-size: 16px; opacity: 0.65; }
-    .results-body { background: var(--white); border-radius: 0 0 var(--radius-lg) var(--radius-lg); padding: 44px; box-shadow: var(--shadow); }
-    .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .breakdown-card { background: var(--off-white); border-radius: var(--radius); padding: 22px; border-left: 4px solid var(--green); }
+    .savings-label {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      position: relative;
+      z-index: 1;
+    }
+    .results-body {
+      background: var(--white);
+      padding: 52px;
+    }
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .breakdown-card {
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid var(--gray-100);
+      border-left: 4px solid var(--green);
+      transition: var(--transition);
+    }
+    .breakdown-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
     .breakdown-card.orange { border-left-color: var(--orange); }
     .breakdown-card.navy { border-left-color: var(--navy); }
-    .breakdown-amount { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 800; color: var(--navy); }
-    .breakdown-title { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; color: var(--gray-600); margin-top: 4px; }
-    .breakdown-desc { font-size: 12px; color: var(--gray-400); margin-top: 4px; line-height: 1.4; }
+    .breakdown-amount {
+      font-family: 'Poppins', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .breakdown-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-500);
+      margin-top: 6px;
+    }
+    .breakdown-desc {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .disclaimer-box {
+      background: var(--green-light);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      border-left: 4px solid var(--green);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .disclaimer-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .disclaimer-text { font-size: 13px; color: var(--gray-700); line-height: 1.6; }
+    .disclaimer-text strong { color: var(--green-dark); font-weight: 700; }
 
     .cta-block {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-      border-radius: var(--radius-lg); padding: 44px; text-align: center; margin-top: 24px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      border-radius: var(--radius-xl);
+      padding: 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .cta-block h3 { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 700; color: white; margin-bottom: 10px; }
-    .cta-block p { font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-    .cta-trust { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 20px; }
-    .trust-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.6); }
-    .trust-icon { color: #4ade80; font-size: 15px; }
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cta-block h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-block p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 32px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-btn-wrap {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-trust {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+    .trust-icon { color: #34d399; font-size: 15px; }
 
-    /* SOCIAL PROOF */
-    .social-proof { background: var(--white); border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow); margin-top: 24px; }
-    .social-proof-title { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 1.2px; text-align: center; margin-bottom: 24px; }
-    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-    .testimonial { background: var(--off-white); border-radius: var(--radius); padding: 22px; }
-    .testimonial-stars { color: var(--orange); font-size: 14px; margin-bottom: 8px; }
-    .testimonial-text { font-size: 14px; color: var(--gray-800); line-height: 1.55; font-style: italic; margin-bottom: 12px; }
-    .testimonial-author { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); }
-    .testimonial-company { font-size: 12px; color: var(--gray-600); }
-
-    /* FOOTER */
-    footer { background: var(--navy); color: rgba(255,255,255,0.45); text-align: center; padding: 28px; font-size: 13px; margin-top: 60px; }
-    footer a { color: rgba(255,255,255,0.65); text-decoration: none; }
-
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-      .step-card { padding: 24px 18px; }
-      .results-header { padding: 32px 20px 24px; }
-      .results-body { padding: 24px 18px; }
-      .cta-block { padding: 28px 18px; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); }
-      .hero { padding: 44px 20px 36px; }
-      .hero-stats { gap: 20px; }
+    /* ===================== FEATURE STRIP ===================== */
+    .feature-strip {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 36px 40px;
+      box-shadow: var(--shadow);
+      margin-top: 28px;
+      border: 1px solid var(--gray-100);
+    }
+    .feature-strip-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .feature-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .feature-text {}
+    .feature-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .feature-desc {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 3px;
+      line-height: 1.4;
     }
 
-    .error-msg { color: #dc3545; font-size: 13px; margin-top: 8px; display: none; }
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      padding: 32px 40px;
+      font-size: 13px;
+      margin-top: 80px;
+    }
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+
+    /* ===================== ERROR ===================== */
+    .error-msg {
+      color: #ef4444;
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+      font-weight: 500;
+    }
     .error-msg.show { display: block; }
-    .input-error { border-color: #dc3545 !important; }
+    .input-error { border-color: #ef4444 !important; }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 900px) {
+      .hero-content { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { display: none; }
+      .hero-content { padding: 60px 24px; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .header-logo img { height: 50px; }
+      .header-trust { display: none; }
+      .trust-bar { padding: 12px 20px; gap: 20px; }
+      .progress-container { padding: 14px 20px; top: 68px; }
+      .step-card { padding: 28px 20px; }
+      .results-header { padding: 40px 24px 32px; }
+      .results-body { padding: 28px 20px; }
+      .cta-block { padding: 32px 20px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 30px; }
+      .social-proof { padding: 28px 20px; }
+      .feature-strip { padding: 28px 20px; }
+    }
   </style>
 </head>
 <body>
 
+<!-- ===================== HEADER ===================== -->
 <header>
-  <img src="assets/images/logo.png" alt="Approviz">
-  <span class="header-badge">Estimateur Gratuit</span>
+  <div class="header-logo">
+    <img src="assets/images/logo.png" alt="Approviz">
+  </div>
+  <div class="header-right">
+    <div class="header-trust">
+      <div class="header-trust-dot"></div>
+      Estimateur en ligne
+    </div>
+    <span class="header-badge">Gratuit &amp; Sans engagement</span>
+  </div>
 </header>
 
+<!-- ===================== HERO ===================== -->
 <section class="hero">
-  <div class="hero-eyebrow">Entreprises de construction &middot; 50+ employ&eacute;s</div>
-  <h1>D&eacute;couvrez combien vous<br>laissez sur la table <span>chaque ann&eacute;e.</span></h1>
-  <p>Remplissez ce formulaire en 2 minutes et obtenez votre estimation personnalis&eacute;e d&apos;&eacute;conomies potentielles avec Approviz.</p>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num">5 000&nbsp;$</div>
-      <div class="hero-stat-label">&eacute;conomies min. / an</div>
+  <div class="hero-bg-image"></div>
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        Entreprises de construction &middot; B2B
+      </div>
+      <h1>Combien laissez-vous sur la table <span class="highlight">chaque ann&eacute;e&nbsp;?</span></h1>
+      <p class="hero-desc">En 2 minutes, d&eacute;couvrez l&apos;&eacute;conomie r&eacute;elle que vous pourriez r&eacute;aliser sur la gestion de vos commandes d&apos;articles promotionnels.</p>
+      <div class="hero-stats-row">
+        <div class="hero-stat">
+          <div class="hero-stat-num">5 000&nbsp;$</div>
+          <div class="hero-stat-label">&eacute;conomies min. / an</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">25 000&nbsp;$</div>
+          <div class="hero-stat-label">&eacute;conomies max. / an</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2 min</div>
+          <div class="hero-stat-label">pour votre r&eacute;sultat</div>
+        </div>
+      </div>
     </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">25 000&nbsp;$</div>
-      <div class="hero-stat-label">&eacute;conomies max. / an</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">2 min</div>
-      <div class="hero-stat-label">pour votre r&eacute;sultat</div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-row">
+          <div class="hero-card-title">R&eacute;duction du temps de gestion</div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.3);">Moyenne clients</div>
+        </div>
+        <div class="hero-card-value">&#8722;73%</div>
+        <div class="hero-card-sub">Temps r&eacute;cup&eacute;r&eacute; sur les commandes</div>
+        <div class="hero-card-bar">
+          <div class="hero-card-bar-fill"></div>
+        </div>
+      </div>
+      <div class="hero-mini-stats">
+        <div class="hero-mini-stat">
+          <div class="hero-mini-stat-num">200+</div>
+          <div class="hero-mini-stat-label">Entreprises clientes</div>
+        </div>
+        <div class="hero-mini-stat">
+          <div class="hero-mini-stat-num">98%</div>
+          <div class="hero-mini-stat-label">Taux de satisfaction</div>
+        </div>
+        <div class="hero-mini-stat">
+          <div class="hero-mini-stat-num">13%</div>
+          <div class="hero-mini-stat-label">&Eacute;conomies sur produits</div>
+        </div>
+        <div class="hero-mini-stat">
+          <div class="hero-mini-stat-num">48h</div>
+          <div class="hero-mini-stat-label">D&eacute;lai de livraison</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ===================== TRUST BAR ===================== -->
+<div class="trust-bar">
+  <div class="trust-item-bar">
+    <div class="trust-icon-bar">&#9989;</div>
+    Sans engagement
+  </div>
+  <div class="trust-item-bar">
+    <div class="trust-icon-bar">&#128274;</div>
+    Donn&eacute;es confidentielles
+  </div>
+  <div class="trust-item-bar">
+    <div class="trust-icon-bar">&#9889;</div>
+    R&eacute;sultat instantan&eacute;
+  </div>
+  <div class="trust-item-bar">
+    <div class="trust-icon-bar">&#127881;</div>
+    100&nbsp;% gratuit
+  </div>
+</div>
+
+<!-- ===================== PROGRESS ===================== -->
 <div class="progress-container">
   <div class="progress-steps">
     <div class="progress-step active" id="prog-1">
@@ -437,44 +1398,58 @@
 
 <main class="main">
 
-  <!-- ÉTAPE 1 -->
+  <!-- ===================== ÉTAPE 1 ===================== -->
   <div class="step-panel active" id="step-1">
     <div class="step-card">
-      <div class="step-title">Parlez-nous de votre &eacute;quipe</div>
-      <div class="step-subtitle">Ces informations nous permettent de calculer le co&ucirc;t r&eacute;el de la gestion interne de vos achats promotionnels.</div>
+      <div class="step-header">
+        <div class="step-tag">&#128203; &Eacute;tape 1 sur 2</div>
+        <div class="step-title">Votre &eacute;quipe de gestion des commandes</div>
+        <div class="step-subtitle">Ces informations nous permettent de calculer le co&ucirc;t r&eacute;el de la gestion interne de vos achats promotionnels. Soyez pr&eacute;cis pour obtenir une estimation fiable.</div>
+      </div>
 
+      <!-- Nombre d'employés -->
       <div class="form-group">
-        <label>Combien de personnes s&apos;occupent des commandes d&apos;articles promotionnels&nbsp;? <span class="required">*</span></label>
+        <label class="field-label">Combien d&apos;employ&eacute;s s&apos;occupent de la gestion des commandes&nbsp;? <span class="required">*</span></label>
         <div class="stepper">
-          <button class="stepper-btn" onclick="stepperChange('nb-employes', -1)">&#8722;</button>
-          <input class="stepper-value" id="nb-employes" type="number" value="2" min="1" max="20" readonly>
-          <button class="stepper-btn" onclick="stepperChange('nb-employes', 1)">+</button>
+          <button class="stepper-btn" onclick="stepperChange('nb-employes', -1)" type="button" aria-label="Diminuer">&#8722;</button>
+          <input class="stepper-value" id="nb-employes" type="number" value="2" min="1" max="20" readonly aria-label="Nombre d'employés">
+          <button class="stepper-btn" onclick="stepperChange('nb-employes', 1)" type="button" aria-label="Augmenter">+</button>
         </div>
+        <div class="field-hint">Nombre de personnes qui participent &agrave; la gestion des commandes d&apos;articles promotionnels</div>
         <div class="error-msg" id="err-employes">Veuillez indiquer au moins 1 personne.</div>
       </div>
 
+      <!-- Taux horaire -->
       <div class="form-group">
-        <label>Quel est leur taux horaire moyen&nbsp;? <span class="required">*</span></label>
-        <div class="input-prefix" id="salary-wrapper">
-          <span class="prefix-symbol">$</span>
-          <input class="prefix-input" id="taux-horaire" type="number" value="28" min="15" max="150" placeholder="28">
+        <label class="field-label">Quel est leur taux horaire moyen&nbsp;? <span class="required">*</span></label>
+        <div class="salary-input-wrap" id="salary-wrapper">
+          <span class="salary-prefix">$</span>
+          <input class="salary-input" id="taux-horaire" type="number" value="28" min="15" max="150" placeholder="28" aria-label="Taux horaire">
         </div>
-        <div style="font-size:12px; color:var(--gray-400); margin-top:6px;">Salaire horaire brut moyen en dollars canadiens</div>
+        <div class="field-hint">Salaire horaire brut moyen en dollars canadiens (entre 15&nbsp;$ et 150&nbsp;$)</div>
         <div class="error-msg" id="err-taux">Veuillez entrer un taux horaire valide (15&nbsp;$ &ndash; 150&nbsp;$).</div>
       </div>
 
+      <!-- Heures par commande -->
       <div class="form-group">
-        <label>Combien d&apos;heures par commande sont consacr&eacute;es aux achats&nbsp;? <span class="required">*</span></label>
-        <div>
-          <div class="slider-value-display" id="hours-display">3 <span>heures / commande</span></div>
-          <input type="range" id="heures-commande" min="0.5" max="12" step="0.5" value="3"
-            oninput="document.getElementById('hours-display').innerHTML = this.value + ' <span>heures / commande</span>'">
-          <div class="slider-labels"><span>30 min</span><span>12 heures</span></div>
+        <label class="field-label">Combien d&apos;heures par commande sont consacr&eacute;es aux achats&nbsp;? <span class="required">*</span></label>
+        <div class="slider-display">
+          <div class="slider-value" id="hours-display">3</div>
+          <div class="slider-unit">heures / commande</div>
         </div>
+        <input type="range" id="heures-commande" min="3" max="100" step="1" value="3"
+          oninput="document.getElementById('hours-display').textContent = this.value"
+          aria-label="Heures par commande">
+        <div class="slider-labels">
+          <span>3 heures (min.)</span>
+          <span>100 heures (max.)</span>
+        </div>
+        <div class="field-hint">Inclut : recherche de fournisseurs, n&eacute;gociation, suivi de commandes, gestion des erreurs et retours</div>
       </div>
 
+      <!-- Fréquence -->
       <div class="form-group">
-        <label>&Agrave; quelle fr&eacute;quence passez-vous des commandes&nbsp;? <span class="required">*</span></label>
+        <label class="field-label">&Agrave; quelle fr&eacute;quence passez-vous des commandes&nbsp;? <span class="required">*</span></label>
         <div class="freq-grid">
           <div class="freq-option">
             <input type="radio" name="frequence" id="freq-1" value="1">
@@ -512,16 +1487,31 @@
         <div class="error-msg" id="err-freq">Veuillez s&eacute;lectionner une fr&eacute;quence.</div>
       </div>
 
+      <!-- Insight box -->
+      <div class="insight-box">
+        <div class="insight-icon">&#128161;</div>
+        <div class="insight-text">
+          <strong>Saviez-vous&nbsp;?</strong> En moyenne, nos clients passaient <strong>6,5 heures par commande</strong> avant Approviz. Apr&egrave;s, c&apos;est moins de <strong>20 minutes</strong>. Cela repr&eacute;sente une r&eacute;duction de 95&nbsp;% du temps administratif.
+        </div>
+      </div>
+
       <div class="btn-row">
-        <button class="btn-primary" onclick="goToStep2()">
+        <button class="btn-primary" onclick="goToStep2()" type="button">
           Continuer &mdash; Choisir mes articles
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
 
+    <!-- Témoignages -->
     <div class="social-proof">
-      <div class="social-proof-title">Ce que disent nos clients</div>
+      <div class="social-proof-header">
+        <div class="social-proof-title">Ce que disent nos clients</div>
+        <div class="social-proof-stars">
+          <span class="stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          &nbsp;4.9/5 &mdash; 200+ avis
+        </div>
+      </div>
       <div class="testimonials">
         <div class="testimonial">
           <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -531,7 +1521,7 @@
         </div>
         <div class="testimonial">
           <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <div class="testimonial-text">&laquo;&nbsp;J&apos;avais 3 fournisseurs diff&eacute;rents. Approviz a tout centralis&eacute;. On &eacute;conomise environ 8 000&nbsp;$ par ann&eacute;e.&nbsp;&raquo;</div>
+          <div class="testimonial-text">&laquo;&nbsp;J&apos;avais 3 fournisseurs diff&eacute;rents. Approviz a tout centralis&eacute;. On &eacute;conomise environ 8&nbsp;000&nbsp;$ par ann&eacute;e.&nbsp;&raquo;</div>
           <div class="testimonial-author">Sophie Gagnon</div>
           <div class="testimonial-company">Pr&eacute;sidente, &Eacute;lectrique SG Inc.</div>
         </div>
@@ -543,130 +1533,199 @@
         </div>
       </div>
     </div>
+
+    <!-- Feature strip -->
+    <div class="feature-strip">
+      <div class="feature-strip-title">Pourquoi Approviz&nbsp;?</div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon-wrap">&#127881;</div>
+          <div class="feature-text">
+            <div class="feature-name">Commande centralis&eacute;e</div>
+            <div class="feature-desc">Un seul point de contact pour tous vos articles</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-wrap">&#128176;</div>
+          <div class="feature-text">
+            <div class="feature-name">Meilleurs prix</div>
+            <div class="feature-desc">Volume group&eacute; = &eacute;conomies garanties</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-wrap">&#9889;</div>
+          <div class="feature-text">
+            <div class="feature-name">Livraison rapide</div>
+            <div class="feature-desc">D&eacute;lai moyen de 48h au Qu&eacute;bec</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-wrap">&#127919;</div>
+          <div class="feature-text">
+            <div class="feature-name">Qualit&eacute; garantie</div>
+            <div class="feature-desc">Articles test&eacute;s et approuv&eacute;s sur le terrain</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- ÉTAPE 2 -->
+  <!-- ===================== ÉTAPE 2 ===================== -->
   <div class="step-panel" id="step-2">
     <div class="step-card">
-      <div class="step-title">Quels articles commandez-vous&nbsp;?</div>
-      <div class="step-subtitle">S&eacute;lectionnez tous les articles que vous achetez pour votre &eacute;quipe. Indiquez la quantit&eacute; annuelle approximative pour chaque article s&eacute;lectionn&eacute;.</div>
+      <div class="step-header">
+        <div class="step-tag">&#128248; &Eacute;tape 2 sur 2</div>
+        <div class="step-title">Vos articles &amp; votre budget</div>
+        <div class="step-subtitle">S&eacute;lectionnez les articles que vous commandez pour votre &eacute;quipe. Les quantit&eacute;s sont automatiquement calcul&eacute;es selon votre nombre d&apos;employ&eacute;s, mais vous pouvez les ajuster.</div>
+      </div>
+
+      <div class="products-intro">
+        <div class="products-intro-icon">&#128161;</div>
+        <div class="products-intro-text">
+          <strong>Calcul automatique&nbsp;:</strong> Les quantit&eacute;s sont pr&eacute;-remplies en fonction de votre nombre d&apos;employ&eacute;s. Vous pouvez les modifier apr&egrave;s avoir s&eacute;lectionn&eacute; un article. Entrez aussi le prix unitaire actuel que vous payez pour un calcul plus pr&eacute;cis.
+        </div>
+      </div>
 
       <div class="products-grid">
+        <!-- T-shirt -->
         <div class="product-option">
           <input type="checkbox" id="p-tshirt" value="tshirt" data-price="18">
           <label class="product-card" for="p-tshirt">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-tshirt.png" alt="T-shirt">
             <div class="product-name">T-shirt</div>
+            <div class="product-price-tag">~18&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-tshirt" value="50" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-tshirt" value="50" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité T-shirt">
             </div>
           </label>
         </div>
+        <!-- Hoodie -->
         <div class="product-option">
           <input type="checkbox" id="p-hoodie" value="hoodie" data-price="52">
           <label class="product-card" for="p-hoodie">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-hoodie.png" alt="Hoodie">
             <div class="product-name">Hoodie</div>
+            <div class="product-price-tag">~52&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-hoodie" value="30" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-hoodie" value="30" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Hoodie">
             </div>
           </label>
         </div>
+        <!-- Crewneck -->
         <div class="product-option">
           <input type="checkbox" id="p-crewneck" value="crewneck" data-price="42">
           <label class="product-card" for="p-crewneck">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-crewneck.png" alt="Crewneck">
             <div class="product-name">Crewneck</div>
+            <div class="product-price-tag">~42&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-crewneck" value="25" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-crewneck" value="25" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Crewneck">
             </div>
           </label>
         </div>
+        <!-- Manteau -->
         <div class="product-option">
           <input type="checkbox" id="p-manteau" value="manteau" data-price="95">
           <label class="product-card" for="p-manteau">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-manteau.png" alt="Manteau">
             <div class="product-name">Manteau</div>
+            <div class="product-price-tag">~95&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-manteau" value="20" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-manteau" value="20" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Manteau">
             </div>
           </label>
         </div>
+        <!-- Manche longue -->
         <div class="product-option">
           <input type="checkbox" id="p-manche-longue" value="manche-longue" data-price="28">
           <label class="product-card" for="p-manche-longue">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-manche-longue.png" alt="Manche longue">
             <div class="product-name">Manche longue</div>
+            <div class="product-price-tag">~28&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-manche-longue" value="30" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-manche-longue" value="30" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Manche longue">
             </div>
           </label>
         </div>
+        <!-- Hoodie zipper -->
         <div class="product-option">
           <input type="checkbox" id="p-hoodie-zipper" value="hoodie-zipper" data-price="58">
           <label class="product-card" for="p-hoodie-zipper">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-hoodie-zipper.png" alt="Hoodie zipper">
             <div class="product-name">Hoodie zipper</div>
+            <div class="product-price-tag">~58&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-hoodie-zipper" value="20" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-hoodie-zipper" value="20" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Hoodie zipper">
             </div>
           </label>
         </div>
+        <!-- Tuque -->
         <div class="product-option">
           <input type="checkbox" id="p-tuque" value="tuque" data-price="22">
           <label class="product-card" for="p-tuque">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-tuque.png" alt="Tuque">
             <div class="product-name">Tuque</div>
+            <div class="product-price-tag">~22&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-tuque" value="40" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-tuque" value="40" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Tuque">
             </div>
           </label>
         </div>
+        <!-- Casquette brodée -->
         <div class="product-option">
           <input type="checkbox" id="p-casquette" value="casquette" data-price="26">
           <label class="product-card" for="p-casquette">
             <span class="product-check">&#10003;</span>
             <img class="product-img" src="assets/images/prod-casquette.png" alt="Casquette brod&eacute;e">
             <div class="product-name">Casquette brod&eacute;e</div>
+            <div class="product-price-tag">~26&nbsp;$ / unit&eacute;</div>
             <div class="product-qty">
               <div class="qty-label">Qt&eacute; / an</div>
-              <input class="qty-input" type="number" id="qty-casquette" value="40" min="1" max="9999" onclick="event.stopPropagation()">
+              <input class="qty-input" type="number" id="qty-casquette" value="40" min="1" max="9999" onclick="event.stopPropagation()" aria-label="Quantité Casquette">
             </div>
           </label>
         </div>
       </div>
+
       <div class="error-msg" id="err-products" style="margin-top:16px;">Veuillez s&eacute;lectionner au moins un article.</div>
 
+      <div class="insight-box" style="margin-top:32px;">
+        <div class="insight-icon">&#128200;</div>
+        <div class="insight-text">
+          <strong>Calcul intelligent&nbsp;:</strong> Les quantit&eacute;s sont automatiquement ajust&eacute;es en fonction de votre nombre d&apos;employ&eacute;s. Pour <strong id="nb-employes-display">2</strong> employ&eacute;s, nous estimons environ <strong>5,5 unit&eacute;s par employ&eacute;</strong> pour les articles fr&eacute;quemment utilis&eacute;s.
+        </div>
+      </div>
+
       <div class="btn-row">
-        <button class="btn-secondary" onclick="goToStep(1)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <button class="btn-secondary" onclick="goToStep(1)" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Retour
         </button>
-        <button class="btn-primary" onclick="calculateAndShow()">
+        <button class="btn-primary" onclick="calculateAndShow()" type="button">
           Calculer mes &eacute;conomies
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ÉTAPE 3 -->
+  <!-- ===================== ÉTAPE 3 ===================== -->
   <div class="step-panel" id="step-3">
-    <div style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+    <div class="results-wrapper">
       <div class="results-header">
         <div class="results-badge">Votre estimation personnalis&eacute;e</div>
         <h2>Vous pourriez &eacute;conomiser</h2>
@@ -692,28 +1751,32 @@
           </div>
         </div>
 
-        <div style="background:var(--green-light); border-radius:var(--radius); padding:20px; margin-bottom:24px; border-left:4px solid var(--green);">
-          <div style="font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; color:var(--green); margin-bottom:6px;">&#9888;&#65039; Note importante</div>
-          <div style="font-size:13px; color:var(--gray-800); line-height:1.55;">Ces estimations sont bas&eacute;es sur les donn&eacute;es moyennes de nos clients dans le secteur de la construction au Qu&eacute;bec. Votre &eacute;conomie r&eacute;elle peut varier. R&eacute;servez un appel gratuit pour obtenir une analyse personnalis&eacute;e et pr&eacute;cise.</div>
+        <div class="disclaimer-box">
+          <div class="disclaimer-icon">&#9888;&#65039;</div>
+          <div class="disclaimer-text">
+            <strong>Note importante&nbsp;:</strong> Ces estimations sont bas&eacute;es sur les donn&eacute;es moyennes de nos clients dans le secteur de la construction au Qu&eacute;bec. Votre &eacute;conomie r&eacute;elle peut varier. R&eacute;servez un appel gratuit pour obtenir une analyse personnalis&eacute;e et pr&eacute;cise.
+          </div>
         </div>
 
         <div class="cta-block">
           <h3>Pr&ecirc;t &agrave; r&eacute;cup&eacute;rer cet argent&nbsp;?</h3>
           <p>R&eacute;servez un appel gratuit de 15 minutes avec un sp&eacute;cialiste Approviz. On vous pr&eacute;sente exactement comment on peut vous faire &eacute;conomiser.</p>
-          <a href="https://calendly.com/approviz" target="_blank" class="btn-calendly" id="calendly-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            R&eacute;server mon appel gratuit &mdash; 15 min
-          </a>
+          <div class="cta-btn-wrap">
+            <a href="https://calendly.com/approviz" target="_blank" rel="noopener noreferrer" class="btn-calendly" id="calendly-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              R&eacute;server mon appel gratuit &mdash; 15 min
+            </a>
+          </div>
           <div class="cta-trust">
             <div class="trust-item"><span class="trust-icon">&#10003;</span> Sans engagement</div>
             <div class="trust-item"><span class="trust-icon">&#10003;</span> 100&nbsp;% gratuit</div>
-            <div class="trust-item"><span class="trust-icon">&#10003;</span> R&eacute;ponse en 24&nbsp;h</div>
+            <div class="trust-item"><span class="trust-icon">&#10003;</span> R&eacute;ponse en 24h</div>
           </div>
         </div>
 
-        <div class="btn-row" style="margin-top:24px; justify-content:center;">
-          <button class="btn-secondary" onclick="goToStep(1)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <div class="btn-row" style="margin-top:28px; justify-content:center;">
+          <button class="btn-secondary" onclick="goToStep(1)" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Recommencer
           </button>
         </div>
@@ -725,86 +1788,168 @@
 
 <footer>
   <p>&copy; 2026 Approviz &mdash; Sp&eacute;cialiste en approvisionnement promotionnel pour entreprises de construction au Qu&eacute;bec</p>
-  <p style="margin-top:6px;"><a href="https://approviz.com">approviz.com</a></p>
+  <p style="margin-top:8px;"><a href="https://approviz.com" rel="noopener noreferrer">approviz.com</a></p>
 </footer>
 
 <script>
+  // ===================== UTILITAIRES DE SÉCURITÉ =====================
+  // Sanitise un entier dans des bornes strictes
+  function safeInt(val, min, max, fallback) {
+    var n = parseInt(val, 10);
+    if (isNaN(n) || !isFinite(n)) return fallback;
+    return Math.min(Math.max(n, min), max);
+  }
+  // Sanitise un float dans des bornes strictes
+  function safeFloat(val, min, max, fallback) {
+    var n = parseFloat(val);
+    if (isNaN(n) || !isFinite(n)) return fallback;
+    return Math.min(Math.max(n, min), max);
+  }
+
+  // ===================== STEPPER =====================
   function stepperChange(id, delta) {
-    const el = document.getElementById(id);
-    const min = parseInt(el.min) || 1;
-    const max = parseInt(el.max) || 99;
-    let val = parseInt(el.value) + delta;
+    var el = document.getElementById(id);
+    var min = parseInt(el.min, 10) || 1;
+    var max = parseInt(el.max, 10) || 99;
+    var val = safeInt(el.value, min, max, min) + delta;
     if (val < min) val = min;
     if (val > max) val = max;
     el.value = val;
   }
 
+  // ===================== NAVIGATION =====================
   function goToStep(n) {
-    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.step-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
     document.getElementById('step-' + n).classList.add('active');
-    for (let i = 1; i <= 3; i++) {
-      const prog = document.getElementById('prog-' + i);
+    for (var i = 1; i <= 3; i++) {
+      var prog = document.getElementById('prog-' + i);
       prog.classList.remove('active', 'completed');
       if (i < n) prog.classList.add('completed');
       if (i === n) prog.classList.add('active');
     }
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // ===================== STEP 1 → STEP 2 =====================
   function goToStep2() {
-    let valid = true;
-    const employes = parseInt(document.getElementById('nb-employes').value);
-    const taux = parseFloat(document.getElementById('taux-horaire').value);
-    const freqEl = document.querySelector('input[name="frequence"]:checked');
+    var valid = true;
+
+    // Validation et sanitisation stricte des entrées
+    var employesRaw = document.getElementById('nb-employes').value;
+    var tauxRaw = document.getElementById('taux-horaire').value;
+    var freqEl = document.querySelector('input[name="frequence"]:checked');
+
+    var employes = safeInt(employesRaw, 1, 20, 0);
+    var taux = safeFloat(tauxRaw, 15, 150, 0);
 
     document.getElementById('err-employes').classList.remove('show');
     document.getElementById('err-taux').classList.remove('show');
     document.getElementById('err-freq').classList.remove('show');
 
-    if (!employes || employes < 1) { document.getElementById('err-employes').classList.add('show'); valid = false; }
-    if (!taux || taux < 15 || taux > 150) {
+    if (employes < 1) {
+      document.getElementById('err-employes').classList.add('show');
+      valid = false;
+    }
+    if (taux < 15) {
       document.getElementById('err-taux').classList.add('show');
       document.getElementById('salary-wrapper').classList.add('input-error');
       valid = false;
-    } else { document.getElementById('salary-wrapper').classList.remove('input-error'); }
-    if (!freqEl) { document.getElementById('err-freq').classList.add('show'); valid = false; }
-    if (valid) goToStep(2);
+    } else {
+      document.getElementById('salary-wrapper').classList.remove('input-error');
+    }
+    // Valider que la fréquence est une valeur attendue
+    var valideFreqs = ['1','2','4','12'];
+    if (!freqEl || valideFreqs.indexOf(freqEl.value) === -1) {
+      document.getElementById('err-freq').classList.add('show');
+      valid = false;
+    }
+
+    if (valid) {
+      updateAutoQuantities(employes);
+      document.getElementById('nb-employes-display').textContent = employes;
+      goToStep(2);
+    }
   }
 
+  // ===================== QUANTITÉS AUTOMATIQUES =====================
+  function updateAutoQuantities(nbEmployes) {
+    var multiplier = 5.5;
+    var products = ['tshirt', 'hoodie', 'crewneck', 'manteau', 'manche-longue', 'hoodie-zipper', 'tuque', 'casquette'];
+    products.forEach(function(p) {
+      var qtyEl = document.getElementById('qty-' + p);
+      if (qtyEl) {
+        var baseQty = Math.round(nbEmployes * multiplier);
+        if (baseQty < 1) baseQty = 1;
+        qtyEl.value = baseQty;
+      }
+    });
+  }
+
+  // ===================== CALCUL =====================
   function calculateAndShow() {
-    const selected = document.querySelectorAll('.products-grid input[type="checkbox"]:checked');
+    var selected = document.querySelectorAll('.products-grid input[type="checkbox"]:checked');
     document.getElementById('err-products').classList.remove('show');
-    if (selected.length === 0) { document.getElementById('err-products').classList.add('show'); return; }
+    if (selected.length === 0) {
+      document.getElementById('err-products').classList.add('show');
+      return;
+    }
 
-    const nbEmployes = parseInt(document.getElementById('nb-employes').value) || 2;
-    const tauxHoraire = parseFloat(document.getElementById('taux-horaire').value) || 28;
-    const heuresCommande = parseFloat(document.getElementById('heures-commande').value) || 3;
-    const freqEl = document.querySelector('input[name="frequence"]:checked');
-    const frequence = freqEl ? parseInt(freqEl.value) : 4;
+    // Sanitisation stricte de toutes les valeurs avant calcul
+    var nbEmployes = safeInt(document.getElementById('nb-employes').value, 1, 20, 2);
+    var tauxHoraire = safeFloat(document.getElementById('taux-horaire').value, 15, 150, 28);
+    var heuresCommande = safeFloat(document.getElementById('heures-commande').value, 3, 100, 3);
+    var freqEl = document.querySelector('input[name="frequence"]:checked');
+    var valideFreqs = {'1':1,'2':2,'4':4,'12':12};
+    var frequence = (freqEl && valideFreqs[freqEl.value]) ? valideFreqs[freqEl.value] : 4;
 
-    const coutAdminActuel = nbEmployes * tauxHoraire * heuresCommande * frequence;
-    const adminSavings = Math.round(coutAdminActuel * 0.70);
+    // Économies administratives (70% du coût actuel)
+    var coutAdminActuel = nbEmployes * tauxHoraire * heuresCommande * frequence;
+    var adminSavings = Math.round(coutAdminActuel * 0.70);
 
-    let totalProductCost = 0;
-    selected.forEach(cb => {
-      const prix = parseFloat(cb.dataset.price) || 20;
-      const qtyEl = document.getElementById('qty-' + cb.value);
-      const qty = qtyEl ? (parseInt(qtyEl.value) || 10) : 10;
+    // Économies sur les produits (13%)
+    var totalProductCost = 0;
+    var allowedProducts = ['tshirt','hoodie','crewneck','manteau','manche-longue','hoodie-zipper','tuque','casquette'];
+    selected.forEach(function(cb) {
+      // Vérifier que la valeur est dans la liste blanche
+      if (allowedProducts.indexOf(cb.value) === -1) return;
+      var prix = safeFloat(cb.dataset.price, 1, 500, 20);
+      var qtyEl = document.getElementById('qty-' + cb.value);
+      var qty = qtyEl ? safeInt(qtyEl.value, 1, 9999, 10) : 10;
       totalProductCost += prix * qty;
     });
-    const productSavings = Math.round(totalProductCost * 0.13);
-    const errorSavings = Math.round(totalProductCost * 0.03);
-    const total = adminSavings + productSavings + errorSavings;
+    var productSavings = Math.round(totalProductCost * 0.13);
+    var errorSavings = Math.round(totalProductCost * 0.03);
+    var total = adminSavings + productSavings + errorSavings;
 
-    const fmt = n => n.toLocaleString('fr-CA') + ' $';
+    var fmt = function(n) {
+      return n.toLocaleString('fr-CA') + ' $';
+    };
     document.getElementById('admin-savings').textContent = fmt(adminSavings);
     document.getElementById('product-savings').textContent = fmt(productSavings);
     document.getElementById('error-savings').textContent = fmt(errorSavings);
     document.getElementById('total-savings').textContent = fmt(total);
 
-    document.getElementById('calendly-btn').href = 'https://calendly.com/approviz?economy=' + total;
+    // Lien Calendly sécurisé avec paramètre encodé
+    document.getElementById('calendly-btn').href =
+      'https://calendly.com/approviz?economy=' + encodeURIComponent(String(total));
+
     goToStep(3);
   }
+
+  // ===================== INIT =====================
+  // Initialiser les quantités au chargement
+  document.addEventListener('DOMContentLoaded', function() {
+    var nbEmployes = parseInt(document.getElementById('nb-employes').value, 10) || 2;
+    updateAutoQuantities(nbEmployes);
+
+    // Mettre à jour les quantités quand le nombre d'employés change
+    document.getElementById('nb-employes').addEventListener('change', function() {
+      var n = parseInt(this.value, 10) || 1;
+      updateAutoQuantities(n);
+    });
+  });
 </script>
 </body>
 </html>
