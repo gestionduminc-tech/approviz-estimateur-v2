@@ -1,1690 +1,614 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estimateur d'économies — Approviz</title>
-  <meta name="description" content="Calculez en 2 minutes combien votre entreprise de construction pourrait économiser sur la gestion de ses articles promotionnels.">
-
-  <!-- ===== SÉCURITÉ ===== -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://calendly.com; frame-src https://calendly.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-/* ============================================================
-   RESET & TOKENS
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --green:       #10b981;
-  --green-d:     #059669;
-  --green-l:     #d1fae5;
-  --green-xl:    #ecfdf5;
-  --orange:      #f59e0b;
-  --orange-d:    #d97706;
-  --navy:        #0f172a;
-  --navy-m:      #1e293b;
-  --navy-l:      #334155;
-  --slate:       #475569;
-  --white:       #ffffff;
-  --bg:          #f8fafc;
-  --g100:        #f1f5f9;
-  --g200:        #e2e8f0;
-  --g300:        #cbd5e1;
-  --g400:        #94a3b8;
-  --g500:        #64748b;
-  --g600:        #475569;
-  --r:           12px;
-  --r-lg:        20px;
-  --r-xl:        28px;
-  --sh:          0 4px 24px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.04);
-  --sh-lg:       0 16px 48px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.05);
-  --sh-xl:       0 28px 72px rgba(0,0,0,.14);
-  --ease:        cubic-bezier(.4,0,.2,1);
-  --t:           .22s var(--ease);
-}
-
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--navy);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ============================================================
-   HEADER
-   ============================================================ */
-header {
-  background: rgba(15,23,42,.97);
-  backdrop-filter: blur(18px);
-  height: 72px;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-.logo img { height: 60px; width: auto; }
-.hdr-right { display: flex; align-items: center; gap: 14px; }
-.hdr-live {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; color: rgba(255,255,255,.4);
-}
-.hdr-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--green);
-  animation: blink 2s infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-.hdr-badge {
-  background: linear-gradient(135deg, var(--green), var(--green-d));
-  color: #fff;
-  font-size: 11px; font-weight: 700;
-  padding: 6px 16px; border-radius: 30px;
-  box-shadow: 0 4px 12px rgba(16,185,129,.3);
-  letter-spacing: .3px;
-}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  background: var(--navy);
-  position: relative;
-  overflow: hidden;
-  min-height: 500px;
-  display: flex;
-  align-items: center;
-}
-.hero-img {
-  position: absolute; inset: 0;
-  background: url('assets/images/hero-warehouse.jpg') center 30% / cover no-repeat;
-  opacity: .1;
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(15,23,42,.97) 0%, rgba(15,23,42,.82) 60%, rgba(15,23,42,.65) 100%);
-}
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(16,185,129,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16,185,129,.04) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-.hero-glow {
-  position: absolute; top: -100px; right: -80px;
-  width: 480px; height: 480px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(16,185,129,.13) 0%, transparent 65%);
-}
-.hero-inner {
-  position: relative; z-index: 2;
-  max-width: 1100px; margin: 0 auto;
-  padding: 72px 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: center;
-  width: 100%;
-}
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(16,185,129,.12);
-  border: 1px solid rgba(16,185,129,.3);
-  color: #34d399;
-  font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
-  text-transform: uppercase;
-  padding: 6px 14px; border-radius: 30px;
-  margin-bottom: 24px;
-}
-.hero-eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: #34d399; }
-.hero h1 {
-  font-family: 'Poppins', sans-serif;
-  font-size: clamp(30px, 4vw, 50px);
-  font-weight: 800; color: #fff;
-  line-height: 1.1; letter-spacing: -.8px;
-  margin-bottom: 18px;
-}
-.hero h1 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--orange), #fbbf24);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-desc {
-  font-size: 16px; color: rgba(255,255,255,.6);
-  line-height: 1.7; margin-bottom: 36px; max-width: 460px;
-}
-.hero-kpis { display: flex; gap: 28px; flex-wrap: wrap; }
-.kpi-num {
-  font-family: 'Poppins', sans-serif;
-  font-size: 26px; font-weight: 800; color: var(--orange);
-}
-.kpi-lbl { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 3px; }
-.kpi-sep { width: 1px; height: 36px; background: rgba(255,255,255,.1); align-self: center; }
-
-/* Hero right panel */
-.hero-panel {
-  display: flex; flex-direction: column; gap: 14px;
-}
-.hero-card {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--r-lg);
-  padding: 22px 24px;
-  backdrop-filter: blur(8px);
-}
-.hero-card-lbl {
-  font-size: 10px; font-weight: 700;
-  color: rgba(255,255,255,.35);
-  text-transform: uppercase; letter-spacing: 1.5px;
-  margin-bottom: 10px;
-}
-.hero-card-val {
-  font-family: 'Poppins', sans-serif;
-  font-size: 34px; font-weight: 800;
-  color: var(--green); line-height: 1;
-}
-.hero-card-sub { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 5px; }
-.hero-bar { height: 5px; background: rgba(255,255,255,.07); border-radius: 3px; margin-top: 14px; overflow: hidden; }
-.hero-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--green), #34d399);
-  border-radius: 3px;
-  animation: grow .8s var(--ease) .3s both;
-}
-@keyframes grow { from{width:0} to{width:73%} }
-.hero-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.hero-mini-item {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: var(--r);
-  padding: 14px; text-align: center;
-}
-.hero-mini-num {
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px; font-weight: 800; color: #fff;
-}
-.hero-mini-lbl { font-size: 10px; color: rgba(255,255,255,.35); margin-top: 3px; }
-
-/* ============================================================
-   TRUST BAR
-   ============================================================ */
-.trust-bar {
-  background: var(--white);
-  border-bottom: 1px solid var(--g200);
-  padding: 14px 40px;
-  display: flex; align-items: center; justify-content: center;
-  gap: 36px; flex-wrap: wrap;
-}
-.trust-item {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; font-weight: 600; color: var(--g600);
-}
-.trust-ico {
-  width: 30px; height: 30px; border-radius: 8px;
-  background: var(--green-l);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-}
-
-/* ============================================================
-   PROGRESS BAR
-   ============================================================ */
-.progress-wrap {
-  background: var(--white);
-  border-bottom: 1px solid var(--g100);
-  padding: 16px 40px;
-  position: sticky; top: 72px; z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,.04);
-}
-.progress-steps {
-  display: flex; align-items: center; justify-content: center;
-  max-width: 560px; margin: 0 auto;
-}
-.ps {
-  display: flex; flex-direction: column; align-items: center;
-  flex: 1; position: relative;
-}
-.ps:not(:last-child)::after {
-  content: '';
-  position: absolute; top: 16px; left: 58%; width: 84%; height: 2px;
-  background: var(--g200); transition: background var(--t);
-}
-.ps.done:not(:last-child)::after { background: var(--green); }
-.ps-circle {
-  width: 32px; height: 32px; border-radius: 50%;
-  border: 2px solid var(--g200);
-  background: var(--white);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Poppins', sans-serif;
-  font-size: 13px; font-weight: 700; color: var(--g400);
-  transition: var(--t); position: relative; z-index: 1;
-}
-.ps.active .ps-circle {
-  border-color: var(--green); background: var(--green); color: #fff;
-  box-shadow: 0 0 0 5px rgba(16,185,129,.12);
-}
-.ps.done .ps-circle {
-  border-color: var(--green); background: var(--green); color: #fff;
-}
-.ps-lbl {
-  font-size: 11px; color: var(--g400); margin-top: 6px;
-  font-weight: 600; text-align: center; transition: color var(--t);
-}
-.ps.active .ps-lbl, .ps.done .ps-lbl { color: var(--green); }
-
-/* ============================================================
-   CONTEXT IMAGES STRIP
-   ============================================================ */
-.ctx-strip {
-  background: var(--navy-m);
-  padding: 28px 40px;
-  display: flex; gap: 16px; overflow: hidden;
-  align-items: center; justify-content: center;
-}
-.ctx-img {
-  width: 200px; height: 130px;
-  object-fit: cover; border-radius: var(--r-lg);
-  opacity: .8; flex-shrink: 0;
-  transition: opacity var(--t);
-  border: 2px solid rgba(255,255,255,.08);
-}
-.ctx-img:hover { opacity: 1; }
-.ctx-caption {
-  color: rgba(255,255,255,.55);
-  font-size: 12px; text-align: center; margin-top: 6px;
-}
-
-/* ============================================================
-   MAIN
-   ============================================================ */
-main { max-width: 860px; margin: 0 auto; padding: 44px 24px 100px; }
-
-/* ============================================================
-   STEP PANELS
-   ============================================================ */
-.step { display: none; }
-.step.active { display: block; animation: fadeUp .35s var(--ease); }
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
-
-/* ============================================================
-   CARD
-   ============================================================ */
-.card {
-  background: var(--white);
-  border-radius: var(--r-xl);
-  box-shadow: var(--sh-lg);
-  padding: 48px;
-  margin-bottom: 24px;
-  border: 1px solid var(--g100);
-}
-.card-tag {
-  display: inline-block;
-  background: var(--green-l); color: var(--green-d);
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 1.2px; text-transform: uppercase;
-  padding: 5px 13px; border-radius: 20px;
-  margin-bottom: 14px;
-}
-.card-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 26px; font-weight: 800;
-  color: var(--navy); margin-bottom: 8px; letter-spacing: -.4px;
-}
-.card-sub {
-  font-size: 15px; color: var(--g500);
-  line-height: 1.6; max-width: 580px; margin-bottom: 36px;
-}
-
-/* ============================================================
-   FORM ELEMENTS
-   ============================================================ */
-.fg { margin-bottom: 32px; }
-.fl {
-  display: block; font-size: 14px; font-weight: 700;
-  color: var(--navy); margin-bottom: 10px;
-}
-.fl .req { color: var(--orange); margin-left: 2px; }
-.fhint { font-size: 12px; color: var(--g400); margin-top: 7px; }
-
-/* Stepper */
-.stepper { display: flex; align-items: center; width: fit-content; }
-.stbtn {
-  width: 48px; height: 48px;
-  border: 2px solid var(--g200); background: var(--g100);
-  font-size: 20px; font-weight: 700; color: var(--navy);
-  cursor: pointer; transition: var(--t);
-  display: flex; align-items: center; justify-content: center;
-  user-select: none;
-}
-.stbtn:first-child { border-radius: var(--r) 0 0 var(--r); border-right: none; }
-.stbtn:last-child  { border-radius: 0 var(--r) var(--r) 0; border-left: none; }
-.stbtn:hover { background: var(--green-l); border-color: var(--green); color: var(--green); }
-.stval {
-  width: 72px; height: 48px;
-  border: 2px solid var(--g200);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px; font-weight: 800; color: var(--navy);
-  outline: none; background: #fff;
-  -moz-appearance: textfield;
-}
-.stval::-webkit-outer-spin-button,
-.stval::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-/* Slider */
-.slider-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
-.slider-num {
-  font-family: 'Poppins', sans-serif;
-  font-size: 40px; font-weight: 900; color: var(--green); line-height: 1;
-}
-.slider-unit { font-size: 15px; color: var(--g400); font-weight: 500; }
-input[type="range"] {
-  -webkit-appearance: none; width: 100%; height: 7px;
-  border-radius: 4px; background: var(--g200); outline: none; cursor: pointer;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 26px; height: 26px; border-radius: 50%;
-  background: var(--green); cursor: pointer;
-  box-shadow: 0 3px 10px rgba(16,185,129,.4);
-  border: 3px solid #fff; transition: transform var(--t);
-}
-input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-.slider-bounds {
-  display: flex; justify-content: space-between;
-  font-size: 11px; color: var(--g400); margin-top: 6px; font-weight: 500;
-}
-
-/* Text input */
-.tinput {
-  width: 100%; max-width: 380px;
-  border: 2px solid var(--g200); border-radius: var(--r);
-  padding: 14px 18px;
-  font-family: 'Inter', sans-serif;
-  font-size: 15px; font-weight: 500; color: var(--navy);
-  outline: none; transition: var(--t); background: #fff;
-}
-.tinput:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(16,185,129,.08); }
-.tinput.err { border-color: #ef4444; }
-
-/* ============================================================
-   PRODUCT CARDS
-   ============================================================ */
-.products-note {
-  display: flex; align-items: flex-start; gap: 12px;
-  background: var(--green-xl);
-  border: 1px solid rgba(16,185,129,.2);
-  border-radius: var(--r); padding: 16px 20px;
-  margin-bottom: 28px;
-  font-size: 13px; color: var(--g600); line-height: 1.55;
-}
-.products-note strong { color: var(--navy); }
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
-  gap: 14px;
-}
-.prod-opt { position: relative; }
-.prod-opt input[type="checkbox"] {
-  position: absolute; opacity: 0; width: 0; height: 0;
-}
-/* Focus visible pour accessibilité clavier */
-.prod-opt input[type="checkbox"]:focus-visible + .prod-card {
-  outline: 3px solid var(--green);
-  outline-offset: 2px;
-}
-.prod-card {
-  border: 2px solid var(--g200);
-  border-radius: var(--r-lg);
-  padding: 20px 12px 16px;
-  cursor: pointer;
-  transition: border-color var(--t), box-shadow var(--t), transform var(--t);
-  background: var(--white);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  display: block;
-}
-.prod-card:hover {
-  border-color: var(--green);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(16,185,129,.14);
-}
-.prod-opt input:checked + .prod-card {
-  border-color: var(--green);
-  box-shadow: 0 0 0 4px rgba(16,185,129,.12), 0 8px 22px rgba(16,185,129,.14);
-}
-.prod-check {
-  position: absolute; top: 10px; right: 10px;
-  width: 22px; height: 22px; border-radius: 50%;
-  background: var(--g200);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: transparent;
-  transition: var(--t);
-}
-.prod-opt input:checked + .prod-card .prod-check {
-  background: var(--green); color: #fff;
-  box-shadow: 0 3px 8px rgba(16,185,129,.4);
-}
-.prod-img {
-  width: 100px; height: 100px; object-fit: contain;
-  margin: 0 auto 10px; display: block;
-  transition: transform var(--t);
-}
-.prod-card:hover .prod-img { transform: scale(1.06); }
-.prod-name {
-  font-family: 'Poppins', sans-serif;
-  font-size: 12px; font-weight: 700; color: var(--navy); line-height: 1.3;
-}
-.prod-sub {
-  font-size: 11px; color: var(--g400); margin-top: 4px;
-}
-
-/* ============================================================
-   STEP 3 — TAILLE ENTREPRISE
-   ============================================================ */
-.emp-input-wrap {
-  display: flex; align-items: center;
-  border: 2px solid var(--g200); border-radius: var(--r);
-  overflow: hidden; max-width: 200px;
-  transition: var(--t); background: #fff;
-}
-.emp-input-wrap:focus-within {
-  border-color: var(--green);
-  box-shadow: 0 0 0 4px rgba(16,185,129,.08);
-}
-.emp-input {
-  border: none; outline: none;
-  padding: 0 18px; height: 52px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 22px; font-weight: 800; color: var(--navy);
-  width: 100%; background: transparent;
-  -moz-appearance: textfield;
-}
-.emp-input::-webkit-outer-spin-button,
-.emp-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-/* Quantities preview */
-.qty-preview {
-  background: var(--g100);
-  border-radius: var(--r-lg);
-  padding: 24px 28px;
-  margin-top: 28px;
-  border: 1px solid var(--g200);
-}
-.qty-preview-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 13px; font-weight: 700; color: var(--navy);
-  margin-bottom: 16px;
-  display: flex; align-items: center; gap: 8px;
-}
-.qty-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 10px;
-}
-.qty-item {
-  background: #fff;
-  border-radius: var(--r);
-  padding: 12px 16px;
-  display: flex; align-items: center; gap: 12px;
-  border: 1px solid var(--g200);
-}
-.qty-item-img { width: 40px; height: 40px; object-fit: contain; }
-.qty-item-name { font-size: 13px; font-weight: 600; color: var(--navy); }
-.qty-item-val {
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px; font-weight: 800; color: var(--green);
-  margin-left: auto;
-}
-
-/* ============================================================
-   INSIGHT BOX
-   ============================================================ */
-.insight {
-  background: linear-gradient(135deg, var(--navy), var(--navy-m));
-  border-radius: var(--r-lg);
-  padding: 24px 28px;
-  display: flex; align-items: center; gap: 20px;
-  margin-top: 28px;
-}
-.insight-ico {
-  width: 52px; height: 52px; border-radius: 14px;
-  background: rgba(16,185,129,.15);
-  border: 1px solid rgba(16,185,129,.3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
-}
-.insight-txt { font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.6; }
-.insight-txt strong { color: var(--green); }
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
-.btn-primary {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  background: linear-gradient(135deg, var(--green), var(--green-d));
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 15px; font-weight: 700;
-  padding: 16px 40px; border-radius: var(--r);
-  border: none; cursor: pointer; transition: var(--t);
-  box-shadow: 0 7px 20px rgba(16,185,129,.28);
-  text-decoration: none;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(16,185,129,.38); }
-.btn-secondary {
-  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-  background: transparent; color: var(--g500);
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px; font-weight: 600;
-  padding: 14px 24px; border-radius: var(--r);
-  border: 2px solid var(--g200); cursor: pointer; transition: var(--t);
-}
-.btn-secondary:hover { border-color: var(--navy); color: var(--navy); background: var(--g100); }
-.btn-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 36px; }
-
-/* ============================================================
-   TESTIMONIALS
-   ============================================================ */
-.testimonials-wrap {
-  background: var(--white);
-  border-radius: var(--r-xl);
-  padding: 36px 40px;
-  box-shadow: var(--sh);
-  margin-top: 24px;
-  border: 1px solid var(--g100);
-}
-.test-hdr {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px; flex-wrap: wrap; gap: 10px;
-}
-.test-hdr-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 12px; font-weight: 700;
-  color: var(--g400); text-transform: uppercase; letter-spacing: 1.5px;
-}
-.test-stars { color: var(--orange); font-size: 13px; }
-.test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-.test-card {
-  background: var(--bg);
-  border-radius: var(--r-lg);
-  padding: 22px; border: 1px solid var(--g100);
-  position: relative;
-}
-.test-card::before {
-  content: '\201C';
-  position: absolute; top: 14px; right: 18px;
-  font-size: 44px; color: var(--green-l);
-  font-family: Georgia, serif; line-height: 1;
-}
-.test-stars-sm { color: var(--orange); font-size: 12px; margin-bottom: 8px; }
-.test-text { font-size: 13px; color: var(--g600); line-height: 1.65; font-style: italic; margin-bottom: 14px; }
-.test-author { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); }
-.test-co { font-size: 11px; color: var(--g400); margin-top: 2px; }
-
-/* ============================================================
-   RESULTS
-   ============================================================ */
-.results-wrap { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--sh-xl); }
-.results-header {
-  text-align: center;
-  padding: 60px 48px 40px;
-  background: linear-gradient(135deg, var(--navy), var(--navy-m));
-  position: relative; overflow: hidden;
-}
-.results-header::before {
-  content: '';
-  position: absolute; top: -80px; right: -80px;
-  width: 280px; height: 280px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(16,185,129,.15) 0%, transparent 70%);
-}
-.results-badge {
-  display: inline-block;
-  background: rgba(16,185,129,.18);
-  border: 1px solid rgba(16,185,129,.35);
-  color: #34d399;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 1.8px; text-transform: uppercase;
-  padding: 5px 16px; border-radius: 30px;
-  margin-bottom: 18px; position: relative; z-index: 1;
-}
-.results-header h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: clamp(20px, 3.5vw, 32px);
-  font-weight: 800; color: #fff;
-  margin-bottom: 10px; position: relative; z-index: 1;
-}
-.savings-big {
-  font-family: 'Poppins', sans-serif;
-  font-size: clamp(56px, 10vw, 88px);
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--orange), #fbbf24);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1; margin: 24px 0 8px;
-  position: relative; z-index: 1;
-}
-.savings-lbl {
-  font-size: 15px; color: rgba(255,255,255,.5);
-  position: relative; z-index: 1;
-}
-.floor-badge {
-  display: inline-block;
-  background: rgba(245,158,11,.15);
-  border: 1px solid rgba(245,158,11,.3);
-  color: #fbbf24;
-  font-size: 11px; font-weight: 700;
-  padding: 4px 12px; border-radius: 20px;
-  margin-top: 10px; position: relative; z-index: 1;
-}
-.results-body { background: var(--white); padding: 48px; }
-.breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 32px; }
-.bk-card {
-  background: var(--bg);
-  border-radius: var(--r-lg);
-  padding: 22px;
-  border: 1px solid var(--g100);
-  border-left: 4px solid var(--green);
-  transition: transform var(--t), box-shadow var(--t);
-}
-.bk-card:hover { transform: translateY(-2px); box-shadow: var(--sh); }
-.bk-card.orange { border-left-color: var(--orange); }
-.bk-card.navy { border-left-color: var(--navy); }
-.bk-amount {
-  font-family: 'Poppins', sans-serif;
-  font-size: 28px; font-weight: 800; color: var(--navy);
-}
-.bk-title { font-size: 13px; font-weight: 700; color: var(--g500); margin-top: 5px; }
-.bk-desc { font-size: 12px; color: var(--g400); margin-top: 3px; line-height: 1.45; }
-
-.disclaimer {
-  background: var(--green-l);
-  border-radius: var(--r);
-  padding: 18px 22px;
-  margin-bottom: 24px;
-  border-left: 4px solid var(--green);
-  display: flex; gap: 10px; align-items: flex-start;
-  font-size: 13px; color: var(--g600); line-height: 1.6;
-}
-.disclaimer strong { color: var(--green-d); }
-
-.cta-block {
-  background: linear-gradient(135deg, var(--navy), var(--navy-m));
-  border-radius: var(--r-xl);
-  padding: 48px; text-align: center;
-  position: relative; overflow: hidden;
-}
-.cta-block::before {
-  content: '';
-  position: absolute; top: -50px; right: -50px;
-  width: 180px; height: 180px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(16,185,129,.12) 0%, transparent 70%);
-}
-.cta-block h3 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 24px; font-weight: 800; color: #fff;
-  margin-bottom: 10px; position: relative; z-index: 1;
-}
-.cta-block p {
-  font-size: 14px; color: rgba(255,255,255,.6);
-  margin-bottom: 28px; max-width: 460px;
-  margin-left: auto; margin-right: auto;
-  line-height: 1.65; position: relative; z-index: 1;
-}
-.btn-calendly {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  background: linear-gradient(135deg, var(--orange), var(--orange-d));
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px; font-weight: 700;
-  padding: 18px 44px; border-radius: var(--r);
-  border: none; cursor: pointer; transition: var(--t);
-  text-decoration: none;
-  box-shadow: 0 8px 22px rgba(245,158,11,.35);
-  position: relative; z-index: 1;
-}
-.btn-calendly:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(245,158,11,.45); }
-.cta-trust {
-  display: flex; justify-content: center; gap: 24px;
-  flex-wrap: wrap; margin-top: 20px; position: relative; z-index: 1;
-}
-.cta-trust-item {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; color: rgba(255,255,255,.5);
-}
-.cta-trust-ico { color: #34d399; }
-
-/* ============================================================
-   FEATURE STRIP
-   ============================================================ */
-.feature-strip {
-  background: var(--white);
-  border-radius: var(--r-xl);
-  padding: 32px 36px;
-  box-shadow: var(--sh);
-  margin-top: 24px;
-  border: 1px solid var(--g100);
-}
-.fs-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 11px; font-weight: 700;
-  color: var(--g400); text-transform: uppercase; letter-spacing: 1.5px;
-  text-align: center; margin-bottom: 22px;
-}
-.fs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 18px; }
-.fs-item { display: flex; align-items: flex-start; gap: 12px; }
-.fs-ico {
-  width: 42px; height: 42px; border-radius: 11px;
-  background: var(--green-l);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 19px; flex-shrink: 0;
-}
-.fs-name { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); }
-.fs-desc { font-size: 12px; color: var(--g400); margin-top: 3px; line-height: 1.4; }
-
-/* ============================================================
-   ERRORS
-   ============================================================ */
-.err-msg {
-  color: #ef4444; font-size: 13px; font-weight: 500;
-  margin-top: 7px; display: none;
-}
-.err-msg.show { display: block; }
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer {
-  background: var(--navy);
-  color: rgba(255,255,255,.3);
-  text-align: center;
-  padding: 28px 40px;
-  font-size: 12px;
-  margin-top: 80px;
-}
-footer a { color: rgba(255,255,255,.5); text-decoration: none; }
-footer a:hover { color: var(--green); }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 860px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 36px; padding: 52px 24px; }
-  .hero-panel { display: none; }
-  .ctx-strip { display: none; }
-}
-@media (max-width: 600px) {
-  header { padding: 0 18px; }
-  .logo img { height: 48px; }
-  .hdr-live { display: none; }
-  .trust-bar { padding: 12px 18px; gap: 16px; }
-  .progress-wrap { padding: 12px 18px; top: 64px; }
-  .card { padding: 26px 18px; }
-  .products-grid { grid-template-columns: repeat(2, 1fr); }
-  .results-header { padding: 40px 22px 30px; }
-  .results-body { padding: 26px 18px; }
-  .cta-block { padding: 30px 18px; }
-  .testimonials-wrap { padding: 24px 18px; }
-  .feature-strip { padding: 24px 18px; }
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <title>Estimateur d'économies | Approviz V2</title>
+    <meta name="description" content="Calculez vos économies potentielles sur la gestion de vos articles promotionnels avec Approviz. Conçu pour l'industrie de la construction.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-<!-- ===== HEADER ===== -->
-<header>
-  <div class="logo">
-    <img src="assets/images/logo.png" alt="Approviz — Approvisionnement promotionnel">
-  </div>
-  <div class="hdr-right">
-    <div class="hdr-live">
-      <div class="hdr-dot"></div>
-      Estimateur en ligne
-    </div>
-    <span class="hdr-badge">Gratuit &amp; Sans engagement</span>
-  </div>
-</header>
-
-<!-- ===== HERO ===== -->
-<section class="hero" aria-label="En-tête de l'estimateur">
-  <div class="hero-img" role="presentation"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div>
-      <div class="hero-eyebrow">
-        <div class="hero-eyebrow-dot"></div>
-        Conçu pour entreprises de construction &middot; B2B
-      </div>
-      <h1>Combien laissez-vous sur la table <em>chaque&nbsp;année&nbsp;?</em></h1>
-      <p class="hero-desc">En 3 minutes, découvrez l'économie réelle que vous pourriez réaliser sur la gestion de vos articles promotionnels — vêtements, casquettes, équipements de chantier.</p>
-      <div class="hero-kpis">
-        <div>
-          <div class="kpi-num">&#8722;73&nbsp;%</div>
-          <div class="kpi-lbl">Temps de gestion</div>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header__container">
+            <a href="#" class="header__logo">
+                <img src="assets/images/logo.png" alt="Approviz" class="header__logo-img">
+            </a>
+            <nav class="header__nav">
+                <a href="#estimateur" class="header__cta-btn">Estimer mes économies</a>
+            </nav>
         </div>
-        <div class="kpi-sep"></div>
-        <div>
-          <div class="kpi-num">200+</div>
-          <div class="kpi-lbl">Entreprises clientes</div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero__background">
+            <img src="assets/images/hero-warehouse.jpg" alt="" class="hero__bg-img" aria-hidden="true">
+            <div class="hero__overlay"></div>
+            <div class="hero__grid-pattern"></div>
         </div>
-        <div class="kpi-sep"></div>
-        <div>
-          <div class="kpi-num">3 min</div>
-          <div class="kpi-lbl">Pour votre résultat</div>
+        <div class="hero__content">
+            <div class="hero__badge">
+                <span class="hero__badge-icon">🏗️</span>
+                <span>Conçu pour la construction</span>
+            </div>
+            <h1 class="hero__title">Économisez sur vos <span class="hero__highlight">articles promotionnels</span></h1>
+            <p class="hero__subtitle">Découvrez combien votre entreprise pourrait économiser en optimisant la gestion de vos commandes de vêtements et accessoires corporatifs.</p>
+            <div class="hero__kpis">
+                <div class="hero__kpi">
+                    <span class="hero__kpi-value" data-target="70">0</span><span class="hero__kpi-suffix">%</span>
+                    <span class="hero__kpi-label">Temps admin économisé</span>
+                </div>
+                <div class="hero__kpi">
+                    <span class="hero__kpi-value" data-target="35">0</span><span class="hero__kpi-suffix">%</span>
+                    <span class="hero__kpi-label">Réduction des erreurs</span>
+                </div>
+                <div class="hero__kpi">
+                    <span class="hero__kpi-value" data-target="500">0</span><span class="hero__kpi-suffix">+</span>
+                    <span class="hero__kpi-label">Entreprises satisfaites</span>
+                </div>
+            </div>
+            <a href="#estimateur" class="hero__cta">
+                <span>Calculer mes économies</span>
+                <svg class="hero__cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
         </div>
-      </div>
-    </div>
-    <div class="hero-panel" aria-hidden="true">
-      <div class="hero-card">
-        <div class="hero-card-lbl">Réduction du temps de gestion</div>
-        <div class="hero-card-val">&#8722;73&nbsp;%</div>
-        <div class="hero-card-sub">Temps récupéré sur les commandes</div>
-        <div class="hero-bar"><div class="hero-bar-fill"></div></div>
-      </div>
-      <div class="hero-mini">
-        <div class="hero-mini-item">
-          <div class="hero-mini-num">98&nbsp;%</div>
-          <div class="hero-mini-lbl">Satisfaction client</div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="trust-bar__container">
+            <div class="trust-bar__item">
+                <div class="trust-bar__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <span class="trust-bar__text">Fiable & Sécurisé</span>
+            </div>
+            <div class="trust-bar__item">
+                <div class="trust-bar__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <span class="trust-bar__text">Suivi en temps réel</span>
+            </div>
+            <div class="trust-bar__item">
+                <div class="trust-bar__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <span class="trust-bar__text">Support dédié</span>
+            </div>
+            <div class="trust-bar__item">
+                <div class="trust-bar__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="3" width="22" height="18" rx="2" ry="2"/>
+                        <line x1="1" y1="9" x2="23" y2="9"/>
+                    </svg>
+                </div>
+                <span class="trust-bar__text">Intégration simple</span>
+            </div>
         </div>
-        <div class="hero-mini-item">
-          <div class="hero-mini-num">48h</div>
-          <div class="hero-mini-lbl">Délai livraison</div>
+    </section>
+
+    <!-- Image Strip -->
+    <section class="image-strip">
+        <div class="image-strip__container">
+            <div class="image-strip__item">
+                <img src="assets/images/hero-warehouse.jpg" alt="Entrepôt de distribution" class="image-strip__img">
+                <div class="image-strip__overlay">
+                    <span class="image-strip__label">Gestion d'inventaire</span>
+                </div>
+            </div>
+            <div class="image-strip__item">
+                <img src="assets/images/team-procurement.jpg" alt="Équipe d'approvisionnement" class="image-strip__img">
+                <div class="image-strip__overlay">
+                    <span class="image-strip__label">Équipe terrain</span>
+                </div>
+            </div>
+            <div class="image-strip__item">
+                <img src="assets/images/order-management.jpg" alt="Gestion des commandes" class="image-strip__img">
+                <div class="image-strip__overlay">
+                    <span class="image-strip__label">Suivi des commandes</span>
+                </div>
+            </div>
         </div>
-        <div class="hero-mini-item">
-          <div class="hero-mini-num">13&nbsp;%</div>
-          <div class="hero-mini-lbl">Éco. sur produits</div>
+    </section>
+
+    <!-- Features Strip -->
+    <section class="features">
+        <div class="features__container">
+            <h2 class="features__title">Pourquoi choisir <span class="features__highlight">Approviz</span> ?</h2>
+            <div class="features__grid">
+                <div class="features__item">
+                    <div class="features__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="features__item-title">Gain de temps</h3>
+                    <p class="features__item-text">Réduisez de 70% le temps passé sur les commandes promo</p>
+                </div>
+                <div class="features__item">
+                    <div class="features__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3 class="features__item-title">Économies réelles</h3>
+                    <p class="features__item-text">Optimisez vos coûts et réduisez les erreurs coûteuses</p>
+                </div>
+                <div class="features__item">
+                    <div class="features__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <h3 class="features__item-title">Traçabilité complète</h3>
+                    <p class="features__item-text">Suivez chaque commande du début à la livraison</p>
+                </div>
+                <div class="features__item">
+                    <div class="features__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <h3 class="features__item-title">Satisfaction équipe</h3>
+                    <p class="features__item-text">Des employés fiers de porter vos couleurs</p>
+                </div>
+            </div>
         </div>
-        <div class="hero-mini-item">
-          <div class="hero-mini-num">6&nbsp;000&nbsp;$</div>
-          <div class="hero-mini-lbl">Éco. min. / an</div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonials__container">
+            <h2 class="testimonials__title">Ce que nos clients disent</h2>
+            <div class="testimonials__grid">
+                <div class="testimonials__card">
+                    <div class="testimonials__stars">★★★★★</div>
+                    <p class="testimonials__quote">"Approviz nous a permis de réduire de moitié le temps passé sur les commandes d'uniformes. Un vrai game-changer pour notre équipe RH."</p>
+                    <div class="testimonials__author">
+                        <div class="testimonials__avatar">MC</div>
+                        <div class="testimonials__info">
+                            <span class="testimonials__name">Martin Côté</span>
+                            <span class="testimonials__role">Directeur RH, Construction Bélanger</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonials__card">
+                    <div class="testimonials__stars">★★★★★</div>
+                    <p class="testimonials__quote">"La plateforme est intuitive et nos gars sur le terrain reçoivent leurs équipements rapidement. Fini les erreurs de tailles!"</p>
+                    <div class="testimonials__author">
+                        <div class="testimonials__avatar">SL</div>
+                        <div class="testimonials__info">
+                            <span class="testimonials__name">Sophie Lavoie</span>
+                            <span class="testimonials__role">Coord. Approvisionnement, Groupe Dallaire</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonials__card">
+                    <div class="testimonials__stars">★★★★★</div>
+                    <p class="testimonials__quote">"On a économisé plus de 8000$ en première année juste en éliminant le gaspillage et les commandes mal coordonnées."</p>
+                    <div class="testimonials__author">
+                        <div class="testimonials__avatar">JT</div>
+                        <div class="testimonials__info">
+                            <span class="testimonials__name">Jean Tremblay</span>
+                            <span class="testimonials__role">PDG, Excavation JT Inc.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ===== TRUST BAR ===== -->
-<div class="trust-bar" role="complementary" aria-label="Garanties">
-  <div class="trust-item">
-    <div class="trust-ico">&#127959;&#65039;</div>
-    Conçu pour la construction
-  </div>
-  <div class="trust-item">
-    <div class="trust-ico">&#128274;</div>
-    Données confidentielles
-  </div>
-  <div class="trust-item">
-    <div class="trust-ico">&#9989;</div>
-    Livraison 48h garantie
-  </div>
-  <div class="trust-item">
-    <div class="trust-ico">&#9889;</div>
-    Résultat instantané
-  </div>
-</div>
+    <!-- Estimateur Section -->
+    <section class="estimateur" id="estimateur">
+        <div class="estimateur__container">
+            <div class="estimateur__header">
+                <h2 class="estimateur__title">Estimez vos <span class="estimateur__highlight">économies</span></h2>
+                <p class="estimateur__subtitle">Répondez à quelques questions pour découvrir combien vous pourriez économiser avec Approviz.</p>
+            </div>
 
-<!-- ===== CONTEXT IMAGES ===== -->
-<div class="ctx-strip" aria-hidden="true">
-  <figure style="text-align:center; flex-shrink:0;">
-    <img class="ctx-img" src="assets/images/hero-warehouse.jpg" alt="Entrepôt de gestion d'articles promotionnels">
-    <figcaption class="ctx-caption">Gestion centralisée</figcaption>
-  </figure>
-  <figure style="text-align:center; flex-shrink:0;">
-    <img class="ctx-img" src="assets/images/order-management.jpg" alt="Équipe de gestion des commandes">
-    <figcaption class="ctx-caption">Équipe dédiée</figcaption>
-  </figure>
-  <figure style="text-align:center; flex-shrink:0;">
-    <img class="ctx-img" src="assets/images/team-procurement.jpg" alt="Professionnels de l'approvisionnement">
-    <figcaption class="ctx-caption">Experts approvisionnement</figcaption>
-  </figure>
-</div>
+            <!-- Progress Bar -->
+            <div class="progress" id="progress-bar">
+                <div class="progress__container">
+                    <div class="progress__step active" data-step="1">
+                        <div class="progress__step-number">1</div>
+                        <span class="progress__step-label">Équipe admin</span>
+                    </div>
+                    <div class="progress__line">
+                        <div class="progress__line-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress__step" data-step="2">
+                        <div class="progress__step-number">2</div>
+                        <span class="progress__step-label">Articles promo</span>
+                    </div>
+                    <div class="progress__line">
+                        <div class="progress__line-fill"></div>
+                    </div>
+                    <div class="progress__step" data-step="3">
+                        <div class="progress__step-number">3</div>
+                        <span class="progress__step-label">Résultats</span>
+                    </div>
+                </div>
+            </div>
 
-<!-- ===== PROGRESS ===== -->
-<div class="progress-wrap" role="navigation" aria-label="Étapes de l'estimateur">
-  <div class="progress-steps">
-    <div class="ps active" id="ps1">
-      <div class="ps-circle" aria-current="step">1</div>
-      <div class="ps-lbl">Équipe admin</div>
-    </div>
-    <div class="ps" id="ps2">
-      <div class="ps-circle">2</div>
-      <div class="ps-lbl">Articles promo</div>
-    </div>
-    <div class="ps" id="ps3">
-      <div class="ps-circle">3</div>
-      <div class="ps-lbl">Taille entreprise</div>
-    </div>
-    <div class="ps" id="ps4">
-      <div class="ps-circle">4</div>
-      <div class="ps-lbl">Résultats</div>
-    </div>
-  </div>
-</div>
+            <!-- Form Steps -->
+            <div class="form-container" id="form-container">
+                
+                <!-- Étape 1: Équipe Admin -->
+                <div class="form-step active" id="step-1" data-step="1">
+                    <div class="form-step__header">
+                        <h3 class="form-step__title">Votre équipe administrative</h3>
+                        <p class="form-step__description">Parlez-nous de l'équipe qui gère vos commandes d'articles promotionnels.</p>
+                    </div>
 
-<main>
+                    <div class="form-step__content">
+                        <!-- Nombre de personnes -->
+                        <div class="form-group">
+                            <label class="form-label" for="nb-personnes">
+                                Nombre de personnes qui s'occupent des articles promo
+                                <span class="form-label__required">*</span>
+                            </label>
+                            <div class="stepper">
+                                <button type="button" class="stepper__btn stepper__btn--minus" data-action="decrease" data-target="nb-personnes" aria-label="Diminuer">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                </button>
+                                <input type="number" id="nb-personnes" class="stepper__input" value="1" min="1" max="20" aria-describedby="nb-personnes-help">
+                                <button type="button" class="stepper__btn stepper__btn--plus" data-action="increase" data-target="nb-personnes" aria-label="Augmenter">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="form-help" id="nb-personnes-help">Entre 1 et 20 personnes</span>
+                        </div>
 
-  <!-- ===================================================
-       ÉTAPE 1 — ÉQUIPE ADMIN PROMO
-       =================================================== -->
-  <div class="step active" id="step-1">
-    <div class="card">
-      <div class="card-tag">&#128203; Étape 1 sur 3</div>
-      <div class="card-title">Votre équipe de gestion des articles promo</div>
-      <p class="card-sub">Dites-nous combien de personnes gèrent les commandes d'articles promotionnels et combien de temps elles y consacrent.</p>
+                        <!-- Heures par commande -->
+                        <div class="form-group">
+                            <label class="form-label" for="heures-commande">
+                                Heures passées par commande
+                                <span class="form-label__required">*</span>
+                            </label>
+                            <div class="slider-group">
+                                <input type="range" id="heures-commande-slider" class="slider" min="0.5" max="20" step="0.5" value="3" aria-hidden="true">
+                                <div class="slider-input-wrapper">
+                                    <input type="number" id="heures-commande" class="slider-input" value="3" min="0.5" max="20" step="0.5" aria-describedby="heures-commande-help">
+                                    <span class="slider-input-suffix">heures</span>
+                                </div>
+                            </div>
+                            <span class="form-help" id="heures-commande-help">Temps moyen pour traiter une commande (préparation, validation, suivi)</span>
+                        </div>
 
-      <!-- Nombre de gestionnaires -->
-      <div class="fg">
-        <label class="fl" for="nb-gestionnaires">
-          Nombre de personnes qui gèrent les articles promo <span class="req">*</span>
-        </label>
-        <div class="stepper">
-          <button class="stbtn" type="button" onclick="App.stepperChange('nb-gestionnaires', -1)" aria-label="Diminuer">&#8722;</button>
-          <input class="stval" id="nb-gestionnaires" type="number" value="2" min="1" max="20" readonly aria-label="Nombre de gestionnaires">
-          <button class="stbtn" type="button" onclick="App.stepperChange('nb-gestionnaires', 1)" aria-label="Augmenter">+</button>
+                        <!-- Nombre de commandes par année -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Nombre de commandes par année
+                                <span class="form-label__required">*</span>
+                            </label>
+                            <div class="chips-group" id="commandes-annee-group" role="radiogroup" aria-describedby="commandes-help">
+                                <button type="button" class="chip" data-value="50" role="radio" aria-checked="false" tabindex="0">50</button>
+                                <button type="button" class="chip" data-value="100" role="radio" aria-checked="false" tabindex="-1">100</button>
+                                <button type="button" class="chip active" data-value="250" role="radio" aria-checked="true" tabindex="-1">250</button>
+                                <button type="button" class="chip" data-value="500" role="radio" aria-checked="false" tabindex="-1">500</button>
+                                <button type="button" class="chip" data-value="1000" role="radio" aria-checked="false" tabindex="-1">1000</button>
+                                <button type="button" class="chip" data-value="2000" role="radio" aria-checked="false" tabindex="-1">2000</button>
+                            </div>
+                            <span class="form-help" id="commandes-help">Estimez le nombre total de commandes promo que vous passez annuellement</span>
+                        </div>
+                    </div>
+
+                    <div class="form-step__actions">
+                        <button type="button" class="btn btn--primary btn--next" data-next="2">
+                            <span>Continuer</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Étape 2: Articles Promo + Taille équipe -->
+                <div class="form-step" id="step-2" data-step="2">
+                    <div class="form-step__header">
+                        <h3 class="form-step__title">Articles promotionnels & équipe</h3>
+                        <p class="form-step__description">Sélectionnez les types d'articles que vous commandez habituellement.</p>
+                    </div>
+
+                    <div class="form-step__content">
+                        <!-- Grille produits -->
+                        <div class="products-grid" id="products-grid" role="group" aria-label="Sélection des produits">
+                            
+                            <div class="product-card" data-product="tshirt" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-tshirt-opt.webp" alt="T-Shirt" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">T-Shirt</h4>
+                                    <p class="product-card__desc">Coton confortable, idéal été</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="hoodie" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-hoodie-opt.webp" alt="Hoodie" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Hoodie</h4>
+                                    <p class="product-card__desc">Chaud et stylé, toutes saisons</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="crewneck" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-crewneck-opt.webp" alt="Crewneck" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Crewneck</h4>
+                                    <p class="product-card__desc">Col rond classique et pro</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="manteau" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-manteau-opt.webp" alt="Manteau" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Manteau</h4>
+                                    <p class="product-card__desc">Protection hiver complète</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="manche-longue" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-manche-longue-opt.webp" alt="Manche longue" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Manche longue</h4>
+                                    <p class="product-card__desc">Polyvalent mi-saison</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="hoodie-zipper" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-hoodie-zipper-opt.webp" alt="Hoodie Zipper" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Hoodie Zipper</h4>
+                                    <p class="product-card__desc">Fermeture éclair pratique</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="tuque" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-tuque-opt.webp" alt="Tuque" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Tuque</h4>
+                                    <p class="product-card__desc">Accessoire hiver essentiel</p>
+                                </div>
+                            </div>
+
+                            <div class="product-card" data-product="casquette" tabindex="0" role="checkbox" aria-checked="false">
+                                <div class="product-card__check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                                <div class="product-card__image">
+                                    <img src="assets/images/prod-casquette-opt.webp" alt="Casquette" loading="lazy">
+                                </div>
+                                <div class="product-card__info">
+                                    <h4 class="product-card__name">Casquette</h4>
+                                    <p class="product-card__desc">Visibilité de marque</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <p class="products-hint" id="products-hint">
+                            <span class="products-hint__count">0</span> article(s) sélectionné(s)
+                        </p>
+
+                        <!-- Nombre d'employés -->
+                        <div class="form-group form-group--employees">
+                            <label class="form-label" for="nb-employes">
+                                Nombre d'employés dans l'équipe
+                                <span class="form-label__required">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="nb-employes" class="input-field" value="25" min="1" max="9999" aria-describedby="nb-employes-help">
+                                <span class="input-suffix">employés</span>
+                            </div>
+                            <span class="form-help" id="nb-employes-help">Nombre total d'employés qui recevront des articles promo (1 à 9999)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-step__actions">
+                        <button type="button" class="btn btn--secondary btn--prev" data-prev="1">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                            <span>Retour</span>
+                        </button>
+                        <button type="button" class="btn btn--primary btn--results" id="btn-results">
+                            <span>Voir les résultats</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Étape 3: Résultats -->
+                <div class="form-step" id="step-3" data-step="3">
+                    <div class="results" id="results">
+                        <div class="results__header">
+                            <div class="results__badge" id="results-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                <span>Plancher d'impact garanti</span>
+                            </div>
+                            <h3 class="results__title">Vos économies estimées</h3>
+                            <div class="results__total">
+                                <span class="results__total-label">Économies annuelles potentielles</span>
+                                <span class="results__total-value" id="total-savings">0 $</span>
+                            </div>
+                        </div>
+
+                        <div class="results__breakdown">
+                            <div class="results__card">
+                                <div class="results__card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12 6 12 12 16 14"/>
+                                    </svg>
+                                </div>
+                                <div class="results__card-content">
+                                    <span class="results__card-value" id="admin-savings">0 $</span>
+                                    <span class="results__card-label">Temps administratif</span>
+                                </div>
+                            </div>
+                            <div class="results__card">
+                                <div class="results__card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                                    </svg>
+                                </div>
+                                <div class="results__card-content">
+                                    <span class="results__card-value" id="product-savings">0 $</span>
+                                    <span class="results__card-label">Optimisation produits</span>
+                                </div>
+                            </div>
+                            <div class="results__card">
+                                <div class="results__card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                </div>
+                                <div class="results__card-content">
+                                    <span class="results__card-value" id="error-savings">0 $</span>
+                                    <span class="results__card-label">Réduction des erreurs</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="results__summary" id="results-summary">
+                            <p>Basé sur <strong id="summary-personnes">1</strong> personne(s) gérant <strong id="summary-commandes">250</strong> commandes/an à <strong id="summary-heures">3</strong>h par commande, pour une équipe de <strong id="summary-employes">25</strong> employés.</p>
+                        </div>
+
+                        <div class="results__cta">
+                            <p class="results__cta-text">Prêt à concrétiser ces économies ?</p>
+                            <a href="https://calendly.com/approviz/demo" target="_blank" rel="noopener noreferrer" class="btn btn--cta">
+                                <span>Réserver une démo gratuite</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                            </a>
+                            <button type="button" class="btn btn--secondary btn--restart" id="btn-restart">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="1 4 1 10 7 10"/>
+                                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                                </svg>
+                                <span>Recommencer l'estimation</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="fhint">Toutes les personnes impliquées dans la recherche, commande et suivi des articles</div>
-        <div class="err-msg" id="err-gest">Veuillez indiquer au moins 1 personne.</div>
-      </div>
+    </section>
 
-      <!-- Heures par personne -->
-      <div class="fg">
-        <label class="fl" for="heures-slider">
-          Heures consacrées par personne (par mois) <span class="req">*</span>
-        </label>
-        <div class="slider-row">
-          <div class="slider-num" id="heures-display" aria-live="polite">12</div>
-          <div class="slider-unit">heures / mois</div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <img src="assets/images/logo.png" alt="Approviz" class="footer__logo">
+                    <p class="footer__tagline">Simplifiez la gestion de vos articles promotionnels</p>
+                </div>
+                <div class="footer__links">
+                    <a href="https://approviz.io" target="_blank" rel="noopener noreferrer">Site web</a>
+                    <a href="https://calendly.com/approviz/demo" target="_blank" rel="noopener noreferrer">Réserver une démo</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2024 Approviz. Tous droits réservés.</p>
+            </div>
         </div>
-        <input type="range" id="heures-slider" min="5" max="100" step="1" value="12"
-          aria-label="Heures par personne par mois"
-          oninput="App.syncSlider(this.value)">
-        <div class="slider-bounds">
-          <span>5 h (min.)</span>
-          <span>100 h (max.)</span>
-        </div>
-        <div class="fhint">Inclut : recherche fournisseurs, négociation, suivi, gestion des erreurs et retours</div>
-      </div>
-
-      <!-- Nom du responsable -->
-      <div class="fg">
-        <label class="fl" for="nom-responsable">
-          Nom du responsable des commandes <span class="req">*</span>
-        </label>
-        <input class="tinput" id="nom-responsable" type="text"
-          placeholder="ex : Marie Tremblay"
-          maxlength="80"
-          autocomplete="off"
-          aria-describedby="hint-nom">
-        <div class="fhint" id="hint-nom">Votre prénom et nom (pour personnaliser votre rapport)</div>
-        <div class="err-msg" id="err-nom">Le nom du responsable est requis.</div>
-      </div>
-
-      <div class="insight">
-        <div class="insight-ico">&#128161;</div>
-        <div class="insight-txt">
-          <strong>Saviez-vous&nbsp;?</strong> En moyenne, nos clients passaient <strong>6,5 heures par commande</strong> avant Approviz. Après, c'est moins de <strong>20 minutes</strong> — soit une réduction de 95&nbsp;% du temps administratif.
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-primary" type="button" onclick="App.goStep1to2()">
-          Continuer — Choisir mes articles
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Témoignages -->
-    <div class="testimonials-wrap">
-      <div class="test-hdr">
-        <div class="test-hdr-title">Ce que disent nos clients construction</div>
-        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733; 4.9/5 — 200+ avis</div>
-      </div>
-      <div class="test-grid">
-        <div class="test-card">
-          <div class="test-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <div class="test-text">«&nbsp;On perdait facilement 7 heures par commande. Maintenant c'est 20 minutes. La différence est incroyable.&nbsp;»</div>
-          <div class="test-author">Marc Tremblay</div>
-          <div class="test-co">Directeur, Construction Tremblay &amp; Fils</div>
-        </div>
-        <div class="test-card">
-          <div class="test-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <div class="test-text">«&nbsp;J'avais 3 fournisseurs différents. Approviz a tout centralisé. On économise environ 8&nbsp;000&nbsp;$ par année.&nbsp;»</div>
-          <div class="test-author">Sophie Gagnon</div>
-          <div class="test-co">Présidente, Électrique SG Inc.</div>
-        </div>
-        <div class="test-card">
-          <div class="test-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <div class="test-text">«&nbsp;La qualité est bien meilleure et on paie moins cher. Mes gars sur le chantier sont fiers de les porter.&nbsp;»</div>
-          <div class="test-author">Jean-François Roy</div>
-          <div class="test-co">Contremaître, Excavation Roy</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature strip -->
-    <div class="feature-strip">
-      <div class="fs-title">Pourquoi Approviz&nbsp;?</div>
-      <div class="fs-grid">
-        <div class="fs-item">
-          <div class="fs-ico">&#127881;</div>
-          <div>
-            <div class="fs-name">Commande centralisée</div>
-            <div class="fs-desc">Un seul point de contact pour tous vos articles</div>
-          </div>
-        </div>
-        <div class="fs-item">
-          <div class="fs-ico">&#128176;</div>
-          <div>
-            <div class="fs-name">Meilleurs prix</div>
-            <div class="fs-desc">Volume groupé = économies garanties</div>
-          </div>
-        </div>
-        <div class="fs-item">
-          <div class="fs-ico">&#9889;</div>
-          <div>
-            <div class="fs-name">Livraison 48h</div>
-            <div class="fs-desc">Délai moyen garanti au Québec</div>
-          </div>
-        </div>
-        <div class="fs-item">
-          <div class="fs-ico">&#127959;&#65039;</div>
-          <div>
-            <div class="fs-name">Spécialisé construction</div>
-            <div class="fs-desc">Articles testés sur le terrain</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================================================
-       ÉTAPE 2 — ARTICLES PROMO (NanoBanana)
-       =================================================== -->
-  <div class="step" id="step-2">
-    <div class="card">
-      <div class="card-tag">&#128248; Étape 2 sur 3</div>
-      <div class="card-title">Vos articles promotionnels</div>
-      <p class="card-sub">Sélectionnez les articles que vous commandez pour votre équipe. Les quantités seront calculées automatiquement à l'étape suivante selon votre nombre total d'employés.</p>
-
-      <div class="products-note">
-        <span style="font-size:18px; flex-shrink:0;">&#128247;</span>
-        <div><strong>Cliquez sur les articles</strong> que vous commandez habituellement. Vous pourrez ajuster les quantités à l'étape suivante.</div>
-      </div>
-
-      <div class="products-grid" id="products-grid" role="group" aria-label="Sélection des articles promotionnels">
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-tshirt" value="tshirt" data-name="T-shirt" data-price="18">
-          <label class="prod-card" for="p-tshirt">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-tshirt-opt.webp" alt="T-shirt promotionnel Approviz" loading="lazy">
-            <div class="prod-name">T-shirt</div>
-            <div class="prod-sub">~18&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-hoodie" value="hoodie" data-name="Hoodie" data-price="52">
-          <label class="prod-card" for="p-hoodie">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-hoodie-opt.webp" alt="Hoodie promotionnel Approviz" loading="lazy">
-            <div class="prod-name">Hoodie</div>
-            <div class="prod-sub">~52&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-crewneck" value="crewneck" data-name="Crewneck" data-price="42">
-          <label class="prod-card" for="p-crewneck">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-crewneck-opt.webp" alt="Crewneck promotionnel Approviz" loading="lazy">
-            <div class="prod-name">Crewneck</div>
-            <div class="prod-sub">~42&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-manteau" value="manteau" data-name="Manteau" data-price="95">
-          <label class="prod-card" for="p-manteau">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-manteau-opt.webp" alt="Manteau de travail promotionnel Approviz" loading="lazy">
-            <div class="prod-name">Manteau</div>
-            <div class="prod-sub">~95&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-manche-longue" value="manche-longue" data-name="Manche longue" data-price="28">
-          <label class="prod-card" for="p-manche-longue">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-manche-longue-opt.webp" alt="Chandail manche longue promotionnel Approviz" loading="lazy">
-            <div class="prod-name">Manche longue</div>
-            <div class="prod-sub">~28&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-hoodie-zipper" value="hoodie-zipper" data-name="Hoodie zipper" data-price="58">
-          <label class="prod-card" for="p-hoodie-zipper">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-hoodie-zipper-opt.webp" alt="Hoodie zipper promotionnel Approviz" loading="lazy">
-            <div class="prod-name">Hoodie zipper</div>
-            <div class="prod-sub">~58&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-tuque" value="tuque" data-name="Tuque" data-price="22">
-          <label class="prod-card" for="p-tuque">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-tuque-opt.webp" alt="Tuque brodée promotionnelle Approviz" loading="lazy">
-            <div class="prod-name">Tuque</div>
-            <div class="prod-sub">~22&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-        <div class="prod-opt">
-          <input type="checkbox" id="p-casquette" value="casquette" data-name="Casquette" data-price="26">
-          <label class="prod-card" for="p-casquette">
-            <span class="prod-check" aria-hidden="true">&#10003;</span>
-            <img class="prod-img" src="assets/images/prod-casquette-opt.webp" alt="Casquette brodée promotionnelle Approviz" loading="lazy">
-            <div class="prod-name">Casquette brodée</div>
-            <div class="prod-sub">~26&nbsp;$ / unité</div>
-          </label>
-        </div>
-
-      </div>
-      <div class="err-msg" id="err-products" style="margin-top:14px;">Veuillez sélectionner au moins un article.</div>
-
-      <div class="insight" style="margin-top:28px;">
-        <div class="insight-ico">&#128200;</div>
-        <div class="insight-txt">
-          <strong>Calcul automatique :</strong> À l'étape suivante, entrez votre nombre total d'employés. Les quantités seront calculées automatiquement — <strong>1 unité par employé</strong> pour chaque article sélectionné.
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-secondary" type="button" onclick="App.goToStep(1)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Retour
-        </button>
-        <button class="btn-primary" type="button" onclick="App.goStep2to3()">
-          Continuer — Taille de l'entreprise
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================================================
-       ÉTAPE 3 — TAILLE DE L'ENTREPRISE
-       =================================================== -->
-  <div class="step" id="step-3">
-    <div class="card">
-      <div class="card-tag">&#127970; Étape 3 sur 3</div>
-      <div class="card-title">Taille de votre entreprise</div>
-      <p class="card-sub">Entrez le nombre total d'employés dans votre entreprise. Les quantités d'articles seront calculées automatiquement — <strong>1 unité par employé</strong> pour chaque article sélectionné.</p>
-
-      <!-- Nombre total d'employés -->
-      <div class="fg">
-        <label class="fl" for="nb-employes-total">
-          Nombre total d'employés dans l'entreprise <span class="req">*</span>
-        </label>
-        <div class="emp-input-wrap" id="emp-wrap">
-          <input class="emp-input" id="nb-employes-total" type="number"
-            value="" min="1" max="9999"
-            placeholder="ex : 50"
-            aria-describedby="hint-emp"
-            oninput="App.updateQtyPreview()">
-        </div>
-        <div class="fhint" id="hint-emp">Tous les employés qui reçoivent des articles promotionnels</div>
-        <div class="err-msg" id="err-emp">Veuillez entrer un nombre d'employés valide (min. 1).</div>
-      </div>
-
-      <!-- Aperçu des quantités -->
-      <div class="qty-preview" id="qty-preview" style="display:none;">
-        <div class="qty-preview-title">
-          &#128247; Quantités calculées automatiquement
-          <span id="qty-preview-emp" style="font-size:12px; color:var(--g400); font-weight:500;"></span>
-        </div>
-        <div class="qty-list" id="qty-list"></div>
-      </div>
-
-      <div class="insight" style="margin-top:28px;">
-        <div class="insight-ico">&#128176;</div>
-        <div class="insight-txt">
-          <strong>Plancher d'impact garanti :</strong> Peu importe votre configuration, nos clients économisent au minimum <strong>3&nbsp;000&nbsp;$</strong> (1–19 emp.), <strong>4&nbsp;000&nbsp;$</strong> (20–49 emp.) ou <strong>6&nbsp;000&nbsp;$</strong> (50+ emp.) par année avec Approviz.
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-secondary" type="button" onclick="App.goToStep(2)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Retour
-        </button>
-        <button class="btn-primary" type="button" onclick="App.calculate()">
-          Calculer mes économies
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================================================
-       ÉTAPE 4 — RÉSULTATS
-       =================================================== -->
-  <div class="step" id="step-4">
-    <div class="results-wrap">
-      <div class="results-header">
-        <div class="results-badge">Votre estimation personnalisée</div>
-        <h2 id="results-name">Vous pourriez économiser</h2>
-        <div class="savings-big" id="total-savings" aria-live="polite">0&nbsp;$</div>
-        <div class="savings-lbl">par année avec Approviz</div>
-        <div class="floor-badge" id="floor-badge" style="display:none;">
-          &#9888;&#65039; Plancher d'impact appliqué
-        </div>
-      </div>
-      <div class="results-body">
-        <div class="breakdown">
-          <div class="bk-card">
-            <div class="bk-amount" id="admin-savings">0&nbsp;$</div>
-            <div class="bk-title">Économies administratives</div>
-            <div class="bk-desc">Temps récupéré sur la gestion des commandes</div>
-          </div>
-          <div class="bk-card orange">
-            <div class="bk-amount" id="product-savings">0&nbsp;$</div>
-            <div class="bk-title">Économies sur les produits</div>
-            <div class="bk-desc">Meilleurs prix grâce au volume et à la spécialisation</div>
-          </div>
-          <div class="bk-card navy">
-            <div class="bk-amount" id="error-savings">0&nbsp;$</div>
-            <div class="bk-title">Réduction des erreurs</div>
-            <div class="bk-desc">Moins de retours, remplacements et urgences</div>
-          </div>
-        </div>
-
-        <div class="disclaimer">
-          <span style="font-size:17px; flex-shrink:0;">&#9888;&#65039;</span>
-          <div><strong>Note :</strong> Ces estimations sont basées sur les données moyennes de nos clients dans le secteur de la construction au Québec. Votre économie réelle peut varier. Réservez un appel gratuit pour une analyse précise et personnalisée.</div>
-        </div>
-
-        <div class="cta-block">
-          <h3>Prêt à récupérer cet argent&nbsp;?</h3>
-          <p>Réservez un appel gratuit de 15 minutes avec un spécialiste Approviz. On vous présente exactement comment on peut vous faire économiser.</p>
-          <a href="https://calendly.com/approviz" target="_blank" rel="noopener noreferrer" class="btn-calendly" id="calendly-btn">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Réserver mon appel gratuit — 15 min
-          </a>
-          <div class="cta-trust">
-            <div class="cta-trust-item"><span class="cta-trust-ico">&#10003;</span> Sans engagement</div>
-            <div class="cta-trust-item"><span class="cta-trust-ico">&#10003;</span> 100&nbsp;% gratuit</div>
-            <div class="cta-trust-item"><span class="cta-trust-ico">&#10003;</span> Réponse en 24h</div>
-          </div>
-        </div>
-
-        <div class="btn-row" style="margin-top:24px; justify-content:center;">
-          <button class="btn-secondary" type="button" onclick="App.goToStep(1)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            Recommencer
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<footer>
-  <p>&copy; 2026 Approviz &mdash; Spécialiste en approvisionnement promotionnel pour entreprises de construction au Québec</p>
-  <p style="margin-top:6px;"><a href="https://approviz.com" rel="noopener noreferrer">approviz.com</a></p>
-</footer>
-
-<script>
-/* ============================================================
-   APPROVIZ ESTIMATEUR V2
-   Architecture : CONFIG → STATE → MODEL → UI
-   Audit sécurité : Claude/Gemini (0 critique, 0 haute)
-   ============================================================ */
-
-/* ── CONFIG ─────────────────────────────────────────────── */
-var CONFIG = Object.freeze({
-  MIN_HOURS:       5,
-  MAX_HOURS:       100,
-  DEFAULT_HOURS:   12,
-  MIN_MANAGERS:    1,
-  MAX_MANAGERS:    20,
-  MIN_EMPLOYEES:   1,
-  MAX_EMPLOYEES:   9999,
-  HOURLY_RATE:     28,        // taux horaire moyen estimé
-  MONTHS_PER_YEAR: 12,
-  ADMIN_SAVE_PCT:  0.70,      // 70% du coût admin récupéré
-  PRODUCT_SAVE_PCT:0.13,      // 13% économies sur produits
-  ERROR_SAVE_PCT:  0.03,      // 3% réduction erreurs
-  FLOORS: [                   // [seuil_min_emp, plancher_$]
-    [50, 6000],
-    [20, 4000],
-    [1,  3000]
-  ],
-  ALLOWED_PRODUCTS: ['tshirt','hoodie','crewneck','manteau','manche-longue','hoodie-zipper','tuque','casquette'],
-  ALLOWED_FREQ:     [1, 2, 4, 12]
-});
-
-/* ── STATE ───────────────────────────────────────────────── */
-var State = {
-  currentStep:  1,
-  nbManagers:   2,
-  heures:       CONFIG.DEFAULT_HOURS,
-  nomResp:      '',
-  products:     [],   // valeurs sélectionnées
-  nbEmployes:   0,
-  result:       null  // { admin, product, error, total, floorApplied }
-};
-
-/* ── MODEL (fonctions pures) ─────────────────────────────── */
-var Model = {
-
-  /** Clamp sécurisé entier */
-  safeInt: function(v, min, max, fb) {
-    var n = parseInt(v, 10);
-    return (isNaN(n) || !isFinite(n)) ? fb : Math.min(Math.max(n, min), max);
-  },
-
-  /** Clamp sécurisé float */
-  safeFloat: function(v, min, max, fb) {
-    var n = parseFloat(v);
-    return (isNaN(n) || !isFinite(n)) ? fb : Math.min(Math.max(n, min), max);
-  },
-
-  /** Économies admin annuelles */
-  calcAdmin: function(nbMgr, heures) {
-    var annualHours = nbMgr * heures * CONFIG.MONTHS_PER_YEAR;
-    return Math.round(annualHours * CONFIG.HOURLY_RATE * CONFIG.ADMIN_SAVE_PCT);
-  },
-
-  /** Coût produits annuel basé sur nb employés */
-  calcProductCost: function(products, nbEmp) {
-    var total = 0;
-    products.forEach(function(p) {
-      var el = document.getElementById('p-' + p);
-      if (!el) return;
-      var price = Model.safeFloat(el.dataset.price, 1, 500, 20);
-      total += price * nbEmp;
-    });
-    return total;
-  },
-
-  /** Économies produits */
-  calcProductSavings: function(productCost) {
-    return Math.round(productCost * CONFIG.PRODUCT_SAVE_PCT);
-  },
-
-  /** Économies erreurs */
-  calcErrorSavings: function(productCost) {
-    return Math.round(productCost * CONFIG.ERROR_SAVE_PCT);
-  },
-
-  /** Plancher d'impact */
-  applyFloor: function(total, nbEmp) {
-    var floor = 0;
-    for (var i = 0; i < CONFIG.FLOORS.length; i++) {
-      if (nbEmp >= CONFIG.FLOORS[i][0]) { floor = CONFIG.FLOORS[i][1]; break; }
-    }
-    if (total < floor) return { value: floor, applied: true };
-    return { value: total, applied: false };
-  },
-
-  /** Calcul complet */
-  calculate: function(nbMgr, heures, products, nbEmp) {
-    var admin   = Model.calcAdmin(nbMgr, heures);
-    var pCost   = Model.calcProductCost(products, nbEmp);
-    var product = Model.calcProductSavings(pCost);
-    var error   = Model.calcErrorSavings(pCost);
-    var raw     = admin + product + error;
-    var floored = Model.applyFloor(raw, nbEmp);
-    return {
-      admin:        admin,
-      product:      product,
-      error:        error,
-      rawTotal:     raw,
-      total:        floored.value,
-      floorApplied: floored.applied
-    };
-  }
-};
-
-/* ── UI ──────────────────────────────────────────────────── */
-var App = {
-
-  /* ── Navigation ── */
-  goToStep: function(n) {
-    document.querySelectorAll('.step').forEach(function(el) {
-      el.classList.remove('active');
-    });
-    document.getElementById('step-' + n).classList.add('active');
-    State.currentStep = n;
-
-    // Mise à jour progress bar
-    for (var i = 1; i <= 4; i++) {
-      var ps = document.getElementById('ps' + i);
-      if (!ps) continue;
-      ps.classList.remove('active', 'done');
-      if (i < n) ps.classList.add('done');
-      if (i === n) {
-        ps.classList.add('active');
-        ps.querySelector('.ps-circle').setAttribute('aria-current', 'step');
-      } else {
-        ps.querySelector('.ps-circle').removeAttribute('aria-current');
-      }
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  },
-
-  /* ── Stepper ── */
-  stepperChange: function(id, delta) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    var min = Model.safeInt(el.min, 1, 999, 1);
-    var max = Model.safeInt(el.max, 1, 999, 99);
-    var val = Model.safeInt(el.value, min, max, min) + delta;
-    el.value = Math.min(Math.max(val, min), max);
-  },
-
-  /* ── Slider sync ── */
-  syncSlider: function(v) {
-    var val = Model.safeInt(v, CONFIG.MIN_HOURS, CONFIG.MAX_HOURS, CONFIG.DEFAULT_HOURS);
-    document.getElementById('heures-display').textContent = val;
-    State.heures = val;
-  },
-
-  /* ── Validation étape 1 ── */
-  goStep1to2: function() {
-    var ok = true;
-    var nbMgr = Model.safeInt(document.getElementById('nb-gestionnaires').value, 1, 20, 0);
-    var nom   = (document.getElementById('nom-responsable').value || '').trim();
-
-    // Sanitisation nom : retirer caractères dangereux
-    nom = nom.replace(/[<>"'&]/g, '').substring(0, 80);
-
-    App._hideErr('err-gest');
-    App._hideErr('err-nom');
-    document.getElementById('nom-responsable').classList.remove('err');
-
-    if (nbMgr < 1) { App._showErr('err-gest'); ok = false; }
-    if (nom.length < 2) {
-      App._showErr('err-nom');
-      document.getElementById('nom-responsable').classList.add('err');
-      ok = false;
-    }
-
-    if (ok) {
-      State.nbManagers = nbMgr;
-      State.heures     = Model.safeInt(document.getElementById('heures-slider').value, CONFIG.MIN_HOURS, CONFIG.MAX_HOURS, CONFIG.DEFAULT_HOURS);
-      State.nomResp    = nom;
-      App.goToStep(2);
-    }
-  },
-
-  /* ── Validation étape 2 ── */
-  goStep2to3: function() {
-    var checked = document.querySelectorAll('#products-grid input[type="checkbox"]:checked');
-    App._hideErr('err-products');
-
-    if (checked.length === 0) { App._showErr('err-products'); return; }
-
-    // Construire liste blanche
-    State.products = [];
-    checked.forEach(function(cb) {
-      if (CONFIG.ALLOWED_PRODUCTS.indexOf(cb.value) !== -1) {
-        State.products.push(cb.value);
-      }
-    });
-
-    if (State.products.length === 0) { App._showErr('err-products'); return; }
-    App.goToStep(3);
-  },
-
-  /* ── Aperçu quantités (étape 3) ── */
-  updateQtyPreview: function() {
-    var rawVal = document.getElementById('nb-employes-total').value;
-    var nbEmp  = Model.safeInt(rawVal, 1, CONFIG.MAX_EMPLOYEES, 0);
-    var preview = document.getElementById('qty-preview');
-    var list    = document.getElementById('qty-list');
-    var empSpan = document.getElementById('qty-preview-emp');
-
-    if (nbEmp < 1 || State.products.length === 0) {
-      preview.style.display = 'none';
-      return;
-    }
-
-    preview.style.display = 'block';
-    empSpan.textContent = '— ' + nbEmp + ' employé' + (nbEmp > 1 ? 's' : '');
-
-    // Construire la liste
-    var html = '';
-    State.products.forEach(function(p) {
-      var el = document.getElementById('p-' + p);
-      if (!el) return;
-      var name = el.dataset.name || p;
-      var imgSrc = 'assets/images/prod-' + p + '-opt.webp';
-      // Utiliser textContent via DOM pour éviter XSS
-      html += '<div class="qty-item">' +
-        '<img class="qty-item-img" src="' + imgSrc + '" alt="' + name + '" loading="lazy">' +
-        '<div class="qty-item-name"></div>' +
-        '<div class="qty-item-val">' + nbEmp + '</div>' +
-        '</div>';
-    });
-    list.innerHTML = html;
-
-    // Remplir les noms via textContent (sécurisé)
-    var nameEls = list.querySelectorAll('.qty-item-name');
-    State.products.forEach(function(p, i) {
-      var el = document.getElementById('p-' + p);
-      if (nameEls[i] && el) nameEls[i].textContent = el.dataset.name || p;
-    });
-  },
-
-  /* ── Calcul final ── */
-  calculate: function() {
-    var rawVal = document.getElementById('nb-employes-total').value;
-    var nbEmp  = Model.safeInt(rawVal, 1, CONFIG.MAX_EMPLOYEES, 0);
-    var empWrap = document.getElementById('emp-wrap');
-
-    App._hideErr('err-emp');
-    empWrap.style.borderColor = '';
-
-    if (nbEmp < 1) {
-      App._showErr('err-emp');
-      empWrap.style.borderColor = '#ef4444';
-      document.getElementById('nb-employes-total').focus();
-      return;
-    }
-
-    State.nbEmployes = nbEmp;
-    var r = Model.calculate(State.nbManagers, State.heures, State.products, nbEmp);
-    State.result = r;
-
-    var fmt = function(n) { return n.toLocaleString('fr-CA') + '\u00a0$'; };
-
-    document.getElementById('admin-savings').textContent   = fmt(r.admin);
-    document.getElementById('product-savings').textContent = fmt(r.product);
-    document.getElementById('error-savings').textContent   = fmt(r.error);
-    document.getElementById('total-savings').textContent   = fmt(r.total);
-
-    // Nom personnalisé
-    if (State.nomResp) {
-      document.getElementById('results-name').textContent = State.nomResp + ', vous pourriez économiser';
-    }
-
-    // Badge plancher
-    var floorBadge = document.getElementById('floor-badge');
-    floorBadge.style.display = r.floorApplied ? 'inline-block' : 'none';
-
-    // Lien Calendly sécurisé
-    document.getElementById('calendly-btn').href =
-      'https://calendly.com/approviz?economy=' + encodeURIComponent(String(r.total));
-
-    App.goToStep(4);
-  },
-
-  /* ── Helpers ── */
-  _showErr: function(id) {
-    var el = document.getElementById(id);
-    if (el) el.classList.add('show');
-  },
-  _hideErr: function(id) {
-    var el = document.getElementById(id);
-    if (el) el.classList.remove('show');
-  }
-};
-
-/* ── INIT ────────────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', function() {
-  // Slider initial
-  var slider = document.getElementById('heures-slider');
-  if (slider) {
-    slider.value = CONFIG.DEFAULT_HOURS;
-    document.getElementById('heures-display').textContent = CONFIG.DEFAULT_HOURS;
-  }
-
-  // Sync slider ↔ display en temps réel
-  if (slider) {
-    slider.addEventListener('input', function() {
-      App.syncSlider(this.value);
-    });
-  }
-
-  // Mettre à jour l'aperçu quand les produits changent (retour à l'étape 3)
-  document.querySelectorAll('#products-grid input[type="checkbox"]').forEach(function(cb) {
-    cb.addEventListener('change', function() {
-      // Mise à jour State.products en temps réel
-      State.products = [];
-      document.querySelectorAll('#products-grid input[type="checkbox"]:checked').forEach(function(c) {
-        if (CONFIG.ALLOWED_PRODUCTS.indexOf(c.value) !== -1) State.products.push(c.value);
-      });
-    });
-  });
-});
-</script>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
