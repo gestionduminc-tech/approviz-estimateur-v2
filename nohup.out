@@ -1,0 +1,616 @@
+127.0.0.1 - - [22/Feb/2026 21:14:34] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 21:14:36] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:14:42] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:14:44] code 404, message File not found
+10.21.252.1 - - [22/Feb/2026 21:14:44] "GET /favicon.ico HTTP/1.1" 404 -
+10.21.252.1 - - [22/Feb/2026 21:15:13] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:13] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:19] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:29] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] code 404, message File not found
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET /000928a8c8cd7dca9e6e3ea43895d356a8a4e4e298d056.mkv HTTP/1.1" 404 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] code 404, message File not found
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET /9cd51831751b8ba5d0eb4770c6e860116e9289.mkv HTTP/1.1" 404 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:31] code 404, message File not found
+10.21.252.1 - - [22/Feb/2026 21:15:31] "GET /55e903dbde63e904ead8434b10.flac HTTP/1.1" 404 -
+10.21.252.1 - - [22/Feb/2026 21:15:31] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:31] code 404, message File not found
+10.21.252.1 - - [22/Feb/2026 21:15:31] "GET /e407b61681dd101e0a74916de0330cb02002178d7966d9.flac HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 51288)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 51356)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 51360)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:15:44] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:15:44] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 51412)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:15:51] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 42006)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:01] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:02] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:02] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:02] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 54294)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 59092)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 59096)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 59112)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:16:15] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:15] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:21] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 48616)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:16:30] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:34] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:35] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:35] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:35] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:35] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:35] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 49250)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:16:43] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 49240)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 49262)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:16:45] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 49248)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:16:48] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:48] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:16:55] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 49980)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:17:05] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:21] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:22] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:22] "GET / HTTP/1.1" 200 -
+10.21.252.1 - - [22/Feb/2026 21:17:22] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 56458)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 56466)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 56476)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 56540)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 56532)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('10.21.252.1', 56528)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/http/server.py", line 1296, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.11/http/server.py", line 657, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 431, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 419, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 664, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 863, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+10.21.252.1 - - [22/Feb/2026 21:17:29] "GET / HTTP/1.1" 200 -
